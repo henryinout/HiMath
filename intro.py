@@ -3,3 +3,7 @@ import json
 with open('SomeName.json', "r") as SN:
     data = json.load(SN)
     print(data["b"][1])
+    print('\n')
+    print(data["a"])
+    print('\n')
+    print(data["b"])
