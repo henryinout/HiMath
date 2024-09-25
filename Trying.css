@@ -16,4 +16,9 @@ hr {color:sienna;}
 p {margin-left:20px;}
 /*
 body {background-image:url("/RelatedPics/gallaxycollapse.jpg");}
+
+	        background-image:url('/RelatedPics/gallaxycollapse.jpg');
+	        background-repeat:no-repeat;
+	        background-position:left ;
+	        margin: right 200px;
 */
