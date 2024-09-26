@@ -1,0 +1,1788 @@
+{
+    "nodes": [
+        {
+            "data": {
+                "id": "BasicArithmetic",
+                "label": "Basic Arithmetic"
+            }
+        },
+        {
+            "data": {
+                "id": "NumberSense",
+                "label": "Number Sense"
+            }
+        },
+        {
+            "data": {
+                "id": "Counting",
+                "label": "Counting"
+            }
+        },
+        {
+            "data": {
+                "id": "PlaceValue",
+                "label": "Place Value"
+            }
+        },
+        {
+            "data": {
+                "id": "Addition",
+                "label": "Addition"
+            }
+        },
+        {
+            "data": {
+                "id": "Subtraction",
+                "label": "Subtraction"
+            }
+        },
+        {
+            "data": {
+                "id": "Multiplication",
+                "label": "Multiplication"
+            }
+        },
+        {
+            "data": {
+                "id": "Division",
+                "label": "Division"
+            }
+        },
+        {
+            "data": {
+                "id": "Fractions",
+                "label": "Fractions"
+            }
+        },
+        {
+            "data": {
+                "id": "Decimals",
+                "label": "Decimals"
+            }
+        },
+        {
+            "data": {
+                "id": "Percentages",
+                "label": "Percentages"
+            }
+        },
+        {
+            "data": {
+                "id": "Ratios",
+                "label": "Ratios"
+            }
+        },
+        {
+            "data": {
+                "id": "Proportions",
+                "label": "Proportions"
+            }
+        },
+        {
+            "data": {
+                "id": "Exponents",
+                "label": "Exponents"
+            }
+        },
+        {
+            "data": {
+                "id": "Roots",
+                "label": "Roots"
+            }
+        },
+        {
+            "data": {
+                "id": "OrderOfOperations",
+                "label": "Order of Operations"
+            }
+        },
+        {
+            "data": {
+                "id": "Variables",
+                "label": "Variables"
+            }
+        },
+        {
+            "data": {
+                "id": "SimpleEquations",
+                "label": "Simple Equations"
+            }
+        },
+        {
+            "data": {
+                "id": "Inequalities",
+                "label": "Inequalities"
+            }
+        },
+        {
+            "data": {
+                "id": "CoordinatePlane",
+                "label": "Coordinate Plane"
+            }
+        },
+        {
+            "data": {
+                "id": "GraphingLines",
+                "label": "Graphing Lines"
+            }
+        },
+        {
+            "data": {
+                "id": "SlopeInterceptForm",
+                "label": "Slope-Intercept Form"
+            }
+        },
+        {
+            "data": {
+                "id": "SystemsOfEquations",
+                "label": "Systems of Equations"
+            }
+        },
+        {
+            "data": {
+                "id": "Functions",
+                "label": "Functions"
+            }
+        },
+        {
+            "data": {
+                "id": "QuadraticEquations",
+                "label": "Quadratic Equations"
+            }
+        },
+        {
+            "data": {
+                "id": "Polynomials",
+                "label": "Polynomials"
+            }
+        },
+        {
+            "data": {
+                "id": "Factoring",
+                "label": "Factoring"
+            }
+        },
+        {
+            "data": {
+                "id": "RationalExpressions",
+                "label": "Rational Expressions"
+            }
+        },
+        {
+            "data": {
+                "id": "RadicalExpressions",
+                "label": "Radical Expressions"
+            }
+        },
+        {
+            "data": {
+                "id": "ComplexNumbers",
+                "label": "Complex Numbers"
+            }
+        },
+        {
+            "data": {
+                "id": "ExponentialFunctions",
+                "label": "Exponential Functions"
+            }
+        },
+        {
+            "data": {
+                "id": "Logarithms",
+                "label": "Logarithms"
+            }
+        },
+        {
+            "data": {
+                "id": "SequencesSeries",
+                "label": "Sequences and Series"
+            }
+        },
+        {
+            "data": {
+                "id": "Probability",
+                "label": "Probability"
+            }
+        },
+        {
+            "data": {
+                "id": "Statistics",
+                "label": "Statistics"
+            }
+        },
+        {
+            "data": {
+                "id": "Combinatorics",
+                "label": "Combinatorics"
+            }
+        },
+        {
+            "data": {
+                "id": "GeometryBasics",
+                "label": "Geometry Basics"
+            }
+        },
+        {
+            "data": {
+                "id": "Angles",
+                "label": "Angles"
+            }
+        },
+        {
+            "data": {
+                "id": "Triangles",
+                "label": "Triangles"
+            }
+        },
+        {
+            "data": {
+                "id": "Congruence",
+                "label": "Congruence"
+            }
+        },
+        {
+            "data": {
+                "id": "Similarity",
+                "label": "Similarity"
+            }
+        },
+        {
+            "data": {
+                "id": "PythagoreanTheorem",
+                "label": "Pythagorean Theorem"
+            }
+        },
+        {
+            "data": {
+                "id": "Circles",
+                "label": "Circles"
+            }
+        },
+        {
+            "data": {
+                "id": "Polygons",
+                "label": "Polygons"
+            }
+        },
+        {
+            "data": {
+                "id": "PerimeterArea",
+                "label": "Perimeter and Area"
+            }
+        },
+        {
+            "data": {
+                "id": "VolumeSurfaceArea",
+                "label": "Volume and Surface Area"
+            }
+        },
+        {
+            "data": {
+                "id": "Transformations",
+                "label": "Transformations"
+            }
+        },
+        {
+            "data": {
+                "id": "TrigonometryBasics",
+                "label": "Trigonometry Basics"
+            }
+        },
+        {
+            "data": {
+                "id": "SineCosineTangent",
+                "label": "Sine/ Cosine/ and Tangent"
+            }
+        },
+        {
+            "data": {
+                "id": "TrigIdentities",
+                "label": "Trigonometric Identities"
+            }
+        },
+        {
+            "data": {
+                "id": "Vectors",
+                "label": "Vectors"
+            }
+        },
+        {
+            "data": {
+                "id": "Matrices",
+                "label": "Matrices"
+            }
+        },
+        {
+            "data": {
+                "id": "Determinants",
+                "label": "Determinants"
+            }
+        },
+        {
+            "data": {
+                "id": "LinearAlgebra",
+                "label": "Linear Algebra"
+            }
+        },
+        {
+            "data": {
+                "id": "CalculusLimits",
+                "label": "Calculus - Limits"
+            }
+        },
+        {
+            "data": {
+                "id": "Derivatives",
+                "label": "Derivatives"
+            }
+        },
+        {
+            "data": {
+                "id": "Integrals",
+                "label": "Integrals"
+            }
+        },
+        {
+            "data": {
+                "id": "DifferentialEquations",
+                "label": "Differential Equations"
+            }
+        },
+        {
+            "data": {
+                "id": "MultivariableCalculus",
+                "label": "Multivariable Calculus"
+            }
+        },
+        {
+            "data": {
+                "id": "LinearProgramming",
+                "label": "Linear Programming"
+            }
+        },
+        {
+            "data": {
+                "id": "ComplexAnalysis",
+                "label": "Complex Analysis"
+            }
+        },
+        {
+            "data": {
+                "id": "NumberTheory",
+                "label": "Number Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "ModularArithmetic",
+                "label": "Modular Arithmetic"
+            }
+        },
+        {
+            "data": {
+                "id": "CryptographyBasics",
+                "label": "Cryptography Basics"
+            }
+        },
+        {
+            "data": {
+                "id": "DiscreteMath",
+                "label": "Discrete Mathematics"
+            }
+        },
+        {
+            "data": {
+                "id": "SetTheory",
+                "label": "Set Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "Logic",
+                "label": "Logic"
+            }
+        },
+        {
+            "data": {
+                "id": "GraphTheory",
+                "label": "Graph Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "TopologyBasics",
+                "label": "Topology Basics"
+            }
+        },
+        {
+            "data": {
+                "id": "GroupTheory",
+                "label": "Group Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "RingTheory",
+                "label": "Ring Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "FieldTheory",
+                "label": "Field Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "RealAnalysis",
+                "label": "Real Analysis"
+            }
+        },
+        {
+            "data": {
+                "id": "MetricSpaces",
+                "label": "Metric Spaces"
+            }
+        },
+        {
+            "data": {
+                "id": "MeasureTheory",
+                "label": "Measure Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "ProbabilityTheory",
+                "label": "Probability Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "GameTheory",
+                "label": "Game Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "MathematicalModeling",
+                "label": "Mathematical Modeling"
+            }
+        },
+        {
+            "data": {
+                "id": "NumericalMethods",
+                "label": "Numerical Methods"
+            }
+        },
+        {
+            "data": {
+                "id": "Optimization",
+                "label": "Optimization"
+            }
+        },
+        {
+            "data": {
+                "id": "DataAnalysis",
+                "label": "Data Analysis"
+            }
+        },
+        {
+            "data": {
+                "id": "MachineLearningBasics",
+                "label": "Machine Learning Basics"
+            }
+        },
+        {
+            "data": {
+                "id": "StatisticalInference",
+                "label": "Statistical Inference"
+            }
+        },
+        {
+            "data": {
+                "id": "HypothesisTesting",
+                "label": "Hypothesis Testing"
+            }
+        },
+        {
+            "data": {
+                "id": "RegressionAnalysis",
+                "label": "Regression Analysis"
+            }
+        },
+        {
+            "data": {
+                "id": "TimeSeriesAnalysis",
+                "label": "Time Series Analysis"
+            }
+        },
+        {
+            "data": {
+                "id": "StochasticProcesses",
+                "label": "Stochastic Processes"
+            }
+        },
+        {
+            "data": {
+                "id": "ChaosTheory",
+                "label": "Chaos Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "Fractals",
+                "label": "Fractals"
+            }
+        },
+        {
+            "data": {
+                "id": "DynamicalSystems",
+                "label": "Dynamical Systems"
+            }
+        },
+        {
+            "data": {
+                "id": "QuantumMechanicsMath",
+                "label": "Quantum Mechanics Mathematics"
+            }
+        },
+        {
+            "data": {
+                "id": "RelativityMath",
+                "label": "Relativity Mathematics"
+            }
+        },
+        {
+            "data": {
+                "id": "DifferentialGeometry",
+                "label": "Differential Geometry"
+            }
+        },
+        {
+            "data": {
+                "id": "TensorCalculus",
+                "label": "Tensor Calculus"
+            }
+        },
+        {
+            "data": {
+                "id": "FunctionalAnalysis",
+                "label": "Functional Analysis"
+            }
+        },
+        {
+            "data": {
+                "id": "AlgebraicTopology",
+                "label": "Algebraic Topology"
+            }
+        },
+        {
+            "data": {
+                "id": "CategoryTheory",
+                "label": "Category Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "LieAlgebras",
+                "label": "Lie Algebras"
+            }
+        },
+        {
+            "data": {
+                "id": "KnotTheory",
+                "label": "Knot Theory"
+            }
+        },
+        {
+            "data": {
+                "id": "AdvancedCombinatorics",
+                "label": "Advanced Combinatorics"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "data": {
+                "source": "BasicArithmetic",
+                "target": "NumberSense"
+            }
+        },
+        {
+            "data": {
+                "source": "BasicArithmetic",
+                "target": "Counting"
+            }
+        },
+        {
+            "data": {
+                "source": "BasicArithmetic",
+                "target": "PlaceValue"
+            }
+        },
+        {
+            "data": {
+                "source": "NumberSense",
+                "target": "Addition"
+            }
+        },
+        {
+            "data": {
+                "source": "NumberSense",
+                "target": "Subtraction"
+            }
+        },
+        {
+            "data": {
+                "source": "NumberSense",
+                "target": "Multiplication"
+            }
+        },
+        {
+            "data": {
+                "source": "NumberSense",
+                "target": "Division"
+            }
+        },
+        {
+            "data": {
+                "source": "Counting",
+                "target": "Addition"
+            }
+        },
+        {
+            "data": {
+                "source": "Counting",
+                "target": "Subtraction"
+            }
+        },
+        {
+            "data": {
+                "source": "PlaceValue",
+                "target": "Addition"
+            }
+        },
+        {
+            "data": {
+                "source": "PlaceValue",
+                "target": "Subtraction"
+            }
+        },
+        {
+            "data": {
+                "source": "PlaceValue",
+                "target": "Multiplication"
+            }
+        },
+        {
+            "data": {
+                "source": "PlaceValue",
+                "target": "Division"
+            }
+        },
+        {
+            "data": {
+                "source": "Addition",
+                "target": "Subtraction"
+            }
+        },
+        {
+            "data": {
+                "source": "Addition",
+                "target": "Multiplication"
+            }
+        },
+        {
+            "data": {
+                "source": "Subtraction",
+                "target": "Multiplication"
+            }
+        },
+        {
+            "data": {
+                "source": "Subtraction",
+                "target": "Division"
+            }
+        },
+        {
+            "data": {
+                "source": "Multiplication",
+                "target": "Division"
+            }
+        },
+        {
+            "data": {
+                "source": "Multiplication",
+                "target": "Fractions"
+            }
+        },
+        {
+            "data": {
+                "source": "Division",
+                "target": "Fractions"
+            }
+        },
+        {
+            "data": {
+                "source": "Division",
+                "target": "Decimals"
+            }
+        },
+        {
+            "data": {
+                "source": "Fractions",
+                "target": "Decimals"
+            }
+        },
+        {
+            "data": {
+                "source": "Fractions",
+                "target": "Percentages"
+            }
+        },
+        {
+            "data": {
+                "source": "Fractions",
+                "target": "Ratios"
+            }
+        },
+        {
+            "data": {
+                "source": "Decimals",
+                "target": "Percentages"
+            }
+        },
+        {
+            "data": {
+                "source": "Decimals",
+                "target": "Ratios"
+            }
+        },
+        {
+            "data": {
+                "source": "Percentages",
+                "target": "Ratios"
+            }
+        },
+        {
+            "data": {
+                "source": "Percentages",
+                "target": "Proportions"
+            }
+        },
+        {
+            "data": {
+                "source": "Ratios",
+                "target": "Proportions"
+            }
+        },
+        {
+            "data": {
+                "source": "Ratios",
+                "target": "Exponents"
+            }
+        },
+        {
+            "data": {
+                "source": "Proportions",
+                "target": "Exponents"
+            }
+        },
+        {
+            "data": {
+                "source": "Proportions",
+                "target": "Roots"
+            }
+        },
+        {
+            "data": {
+                "source": "Exponents",
+                "target": "Roots"
+            }
+        },
+        {
+            "data": {
+                "source": "Exponents",
+                "target": "OrderOfOperations"
+            }
+        },
+        {
+            "data": {
+                "source": "Roots",
+                "target": "OrderOfOperations"
+            }
+        },
+        {
+            "data": {
+                "source": "Roots",
+                "target": "Variables"
+            }
+        },
+        {
+            "data": {
+                "source": "OrderOfOperations",
+                "target": "Variables"
+            }
+        },
+        {
+            "data": {
+                "source": "OrderOfOperations",
+                "target": "SimpleEquations"
+            }
+        },
+        {
+            "data": {
+                "source": "Variables",
+                "target": "SimpleEquations"
+            }
+        },
+        {
+            "data": {
+                "source": "Variables",
+                "target": "Inequalities"
+            }
+        },
+        {
+            "data": {
+                "source": "SimpleEquations",
+                "target": "Inequalities"
+            }
+        },
+        {
+            "data": {
+                "source": "SimpleEquations",
+                "target": "CoordinatePlane"
+            }
+        },
+        {
+            "data": {
+                "source": "Inequalities",
+                "target": "CoordinatePlane"
+            }
+        },
+        {
+            "data": {
+                "source": "Inequalities",
+                "target": "GraphingLines"
+            }
+        },
+        {
+            "data": {
+                "source": "CoordinatePlane",
+                "target": "GraphingLines"
+            }
+        },
+        {
+            "data": {
+                "source": "CoordinatePlane",
+                "target": "Functions"
+            }
+        },
+        {
+            "data": {
+                "source": "GraphingLines",
+                "target": "SlopeInterceptForm"
+            }
+        },
+        {
+            "data": {
+                "source": "GraphingLines",
+                "target": "SystemsOfEquations"
+            }
+        },
+        {
+            "data": {
+                "source": "SlopeInterceptForm",
+                "target": "SystemsOfEquations"
+            }
+        },
+        {
+            "data": {
+                "source": "SlopeInterceptForm",
+                "target": "Functions"
+            }
+        },
+        {
+            "data": {
+                "source": "SystemsOfEquations",
+                "target": "Functions"
+            }
+        },
+        {
+            "data": {
+                "source": "SystemsOfEquations",
+                "target": "QuadraticEquations"
+            }
+        },
+        {
+            "data": {
+                "source": "Functions",
+                "target": "QuadraticEquations"
+            }
+        },
+        {
+            "data": {
+                "source": "Functions",
+                "target": "Polynomials"
+            }
+        },
+        {
+            "data": {
+                "source": "QuadraticEquations",
+                "target": "Polynomials"
+            }
+        },
+        {
+            "data": {
+                "source": "QuadraticEquations",
+                "target": "Factoring"
+            }
+        },
+        {
+            "data": {
+                "source": "Polynomials",
+                "target": "Factoring"
+            }
+        },
+        {
+            "data": {
+                "source": "Polynomials",
+                "target": "RationalExpressions"
+            }
+        },
+        {
+            "data": {
+                "source": "Factoring",
+                "target": "RationalExpressions"
+            }
+        },
+        {
+            "data": {
+                "source": "Factoring",
+                "target": "RadicalExpressions"
+            }
+        },
+        {
+            "data": {
+                "source": "RationalExpressions",
+                "target": "RadicalExpressions"
+            }
+        },
+        {
+            "data": {
+                "source": "RationalExpressions",
+                "target": "ComplexNumbers"
+            }
+        },
+        {
+            "data": {
+                "source": "RadicalExpressions",
+                "target": "ComplexNumbers"
+            }
+        },
+        {
+            "data": {
+                "source": "RadicalExpressions",
+                "target": "ExponentialFunctions"
+            }
+        },
+        {
+            "data": {
+                "source": "ComplexNumbers",
+                "target": "ExponentialFunctions"
+            }
+        },
+        {
+            "data": {
+                "source": "ComplexNumbers",
+                "target": "Logarithms"
+            }
+        },
+        {
+            "data": {
+                "source": "ExponentialFunctions",
+                "target": "Logarithms"
+            }
+        },
+        {
+            "data": {
+                "source": "ExponentialFunctions",
+                "target": "SequencesSeries"
+            }
+        },
+        {
+            "data": {
+                "source": "Logarithms",
+                "target": "SequencesSeries"
+            }
+        },
+        {
+            "data": {
+                "source": "Logarithms",
+                "target": "Probability"
+            }
+        },
+        {
+            "data": {
+                "source": "SequencesSeries",
+                "target": "Probability"
+            }
+        },
+        {
+            "data": {
+                "source": "SequencesSeries",
+                "target": "Statistics"
+            }
+        },
+        {
+            "data": {
+                "source": "Probability",
+                "target": "Statistics"
+            }
+        },
+        {
+            "data": {
+                "source": "Probability",
+                "target": "Combinatorics"
+            }
+        },
+        {
+            "data": {
+                "source": "Statistics",
+                "target": "DataAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "Statistics",
+                "target": "HypothesisTesting"
+            }
+        },
+        {
+            "data": {
+                "source": "Combinatorics",
+                "target": "NumberTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "Combinatorics",
+                "target": "DiscreteMath"
+            }
+        },
+        {
+            "data": {
+                "source": "GeometryBasics",
+                "target": "Angles"
+            }
+        },
+        {
+            "data": {
+                "source": "GeometryBasics",
+                "target": "Triangles"
+            }
+        },
+        {
+            "data": {
+                "source": "GeometryBasics",
+                "target": "Congruence"
+            }
+        },
+        {
+            "data": {
+                "source": "Angles",
+                "target": "Triangles"
+            }
+        },
+        {
+            "data": {
+                "source": "Angles",
+                "target": "TrigonometryBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "Triangles",
+                "target": "Congruence"
+            }
+        },
+        {
+            "data": {
+                "source": "Triangles",
+                "target": "Similarity"
+            }
+        },
+        {
+            "data": {
+                "source": "Triangles",
+                "target": "PythagoreanTheorem"
+            }
+        },
+        {
+            "data": {
+                "source": "Congruence",
+                "target": "Similarity"
+            }
+        },
+        {
+            "data": {
+                "source": "Congruence",
+                "target": "Transformations"
+            }
+        },
+        {
+            "data": {
+                "source": "Similarity",
+                "target": "PythagoreanTheorem"
+            }
+        },
+        {
+            "data": {
+                "source": "Similarity",
+                "target": "Transformations"
+            }
+        },
+        {
+            "data": {
+                "source": "PythagoreanTheorem",
+                "target": "Circles"
+            }
+        },
+        {
+            "data": {
+                "source": "PythagoreanTheorem",
+                "target": "TrigonometryBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "Circles",
+                "target": "Polygons"
+            }
+        },
+        {
+            "data": {
+                "source": "Circles",
+                "target": "TrigonometryBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "Polygons",
+                "target": "PerimeterArea"
+            }
+        },
+        {
+            "data": {
+                "source": "Polygons",
+                "target": "VolumeSurfaceArea"
+            }
+        },
+        {
+            "data": {
+                "source": "PerimeterArea",
+                "target": "VolumeSurfaceArea"
+            }
+        },
+        {
+            "data": {
+                "source": "PerimeterArea",
+                "target": "CoordinatePlane"
+            }
+        },
+        {
+            "data": {
+                "source": "VolumeSurfaceArea",
+                "target": "Transformations"
+            }
+        },
+        {
+            "data": {
+                "source": "VolumeSurfaceArea",
+                "target": "Vectors"
+            }
+        },
+        {
+            "data": {
+                "source": "Transformations",
+                "target": "TrigonometryBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "Transformations",
+                "target": "Vectors"
+            }
+        },
+        {
+            "data": {
+                "source": "TrigonometryBasics",
+                "target": "SineCosineTangent"
+            }
+        },
+        {
+            "data": {
+                "source": "TrigonometryBasics",
+                "target": "TrigIdentities"
+            }
+        },
+        {
+            "data": {
+                "source": "SineCosineTangent",
+                "target": "TrigIdentities"
+            }
+        },
+        {
+            "data": {
+                "source": "SineCosineTangent",
+                "target": "Vectors"
+            }
+        },
+        {
+            "data": {
+                "source": "TrigIdentities",
+                "target": "Vectors"
+            }
+        },
+        {
+            "data": {
+                "source": "TrigIdentities",
+                "target": "CalculusLimits"
+            }
+        },
+        {
+            "data": {
+                "source": "Vectors",
+                "target": "Matrices"
+            }
+        },
+        {
+            "data": {
+                "source": "Vectors",
+                "target": "CalculusLimits"
+            }
+        },
+        {
+            "data": {
+                "source": "Matrices",
+                "target": "Determinants"
+            }
+        },
+        {
+            "data": {
+                "source": "Matrices",
+                "target": "LinearAlgebra"
+            }
+        },
+        {
+            "data": {
+                "source": "Determinants",
+                "target": "LinearAlgebra"
+            }
+        },
+        {
+            "data": {
+                "source": "LinearAlgebra",
+                "target": "CalculusLimits"
+            }
+        },
+        {
+            "data": {
+                "source": "LinearAlgebra",
+                "target": "DifferentialEquations"
+            }
+        },
+        {
+            "data": {
+                "source": "CalculusLimits",
+                "target": "Derivatives"
+            }
+        },
+        {
+            "data": {
+                "source": "CalculusLimits",
+                "target": "Integrals"
+            }
+        },
+        {
+            "data": {
+                "source": "Derivatives",
+                "target": "Integrals"
+            }
+        },
+        {
+            "data": {
+                "source": "Derivatives",
+                "target": "DifferentialEquations"
+            }
+        },
+        {
+            "data": {
+                "source": "Integrals",
+                "target": "DifferentialEquations"
+            }
+        },
+        {
+            "data": {
+                "source": "Integrals",
+                "target": "MultivariableCalculus"
+            }
+        },
+        {
+            "data": {
+                "source": "DifferentialEquations",
+                "target": "MultivariableCalculus"
+            }
+        },
+        {
+            "data": {
+                "source": "DifferentialEquations",
+                "target": "ComplexAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "MultivariableCalculus",
+                "target": "LinearProgramming"
+            }
+        },
+        {
+            "data": {
+                "source": "MultivariableCalculus",
+                "target": "DifferentialGeometry"
+            }
+        },
+        {
+            "data": {
+                "source": "LinearProgramming",
+                "target": "Optimization"
+            }
+        },
+        {
+            "data": {
+                "source": "LinearProgramming",
+                "target": "NumericalMethods"
+            }
+        },
+        {
+            "data": {
+                "source": "ComplexAnalysis",
+                "target": "NumberTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "ComplexAnalysis",
+                "target": "FunctionalAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "NumberTheory",
+                "target": "ModularArithmetic"
+            }
+        },
+        {
+            "data": {
+                "source": "NumberTheory",
+                "target": "CryptographyBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "ModularArithmetic",
+                "target": "CryptographyBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "ModularArithmetic",
+                "target": "GroupTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "CryptographyBasics",
+                "target": "DiscreteMath"
+            }
+        },
+        {
+            "data": {
+                "source": "DiscreteMath",
+                "target": "SetTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "DiscreteMath",
+                "target": "Logic"
+            }
+        },
+        {
+            "data": {
+                "source": "SetTheory",
+                "target": "Logic"
+            }
+        },
+        {
+            "data": {
+                "source": "SetTheory",
+                "target": "GraphTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "Logic",
+                "target": "GraphTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "GraphTheory",
+                "target": "TopologyBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "TopologyBasics",
+                "target": "GroupTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "TopologyBasics",
+                "target": "AlgebraicTopology"
+            }
+        },
+        {
+            "data": {
+                "source": "GroupTheory",
+                "target": "RingTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "GroupTheory",
+                "target": "FieldTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "RingTheory",
+                "target": "FieldTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "RealAnalysis",
+                "target": "MetricSpaces"
+            }
+        },
+        {
+            "data": {
+                "source": "RealAnalysis",
+                "target": "MeasureTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "MetricSpaces",
+                "target": "MeasureTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "MetricSpaces",
+                "target": "FunctionalAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "MeasureTheory",
+                "target": "ProbabilityTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "MeasureTheory",
+                "target": "FunctionalAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "ProbabilityTheory",
+                "target": "StochasticProcesses"
+            }
+        },
+        {
+            "data": {
+                "source": "ProbabilityTheory",
+                "target": "GameTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "GameTheory",
+                "target": "Optimization"
+            }
+        },
+        {
+            "data": {
+                "source": "GameTheory",
+                "target": "MathematicalModeling"
+            }
+        },
+        {
+            "data": {
+                "source": "MathematicalModeling",
+                "target": "NumericalMethods"
+            }
+        },
+        {
+            "data": {
+                "source": "MathematicalModeling",
+                "target": "DataAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "NumericalMethods",
+                "target": "Optimization"
+            }
+        },
+        {
+            "data": {
+                "source": "NumericalMethods",
+                "target": "MachineLearningBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "Optimization",
+                "target": "MachineLearningBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "Optimization",
+                "target": "DataAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "DataAnalysis",
+                "target": "MachineLearningBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "DataAnalysis",
+                "target": "RegressionAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "MachineLearningBasics",
+                "target": "RegressionAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "MachineLearningBasics",
+                "target": "TimeSeriesAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "StatisticalInference",
+                "target": "HypothesisTesting"
+            }
+        },
+        {
+            "data": {
+                "source": "StatisticalInference",
+                "target": "RegressionAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "HypothesisTesting",
+                "target": "RegressionAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "HypothesisTesting",
+                "target": "TimeSeriesAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "RegressionAnalysis",
+                "target": "TimeSeriesAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "RegressionAnalysis",
+                "target": "MachineLearningBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "TimeSeriesAnalysis",
+                "target": "StochasticProcesses"
+            }
+        },
+        {
+            "data": {
+                "source": "TimeSeriesAnalysis",
+                "target": "MachineLearningBasics"
+            }
+        },
+        {
+            "data": {
+                "source": "StochasticProcesses",
+                "target": "ChaosTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "StochasticProcesses",
+                "target": "DynamicalSystems"
+            }
+        },
+        {
+            "data": {
+                "source": "ChaosTheory",
+                "target": "DynamicalSystems"
+            }
+        },
+        {
+            "data": {
+                "source": "ChaosTheory",
+                "target": "Fractals"
+            }
+        },
+        {
+            "data": {
+                "source": "Fractals",
+                "target": "DynamicalSystems"
+            }
+        },
+        {
+            "data": {
+                "source": "Fractals",
+                "target": "ComplexAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "DynamicalSystems",
+                "target": "QuantumMechanicsMath"
+            }
+        },
+        {
+            "data": {
+                "source": "DynamicalSystems",
+                "target": "DifferentialGeometry"
+            }
+        },
+        {
+            "data": {
+                "source": "QuantumMechanicsMath",
+                "target": "RelativityMath"
+            }
+        },
+        {
+            "data": {
+                "source": "QuantumMechanicsMath",
+                "target": "TensorCalculus"
+            }
+        },
+        {
+            "data": {
+                "source": "RelativityMath",
+                "target": "DifferentialGeometry"
+            }
+        },
+        {
+            "data": {
+                "source": "RelativityMath",
+                "target": "TensorCalculus"
+            }
+        },
+        {
+            "data": {
+                "source": "DifferentialGeometry",
+                "target": "TensorCalculus"
+            }
+        },
+        {
+            "data": {
+                "source": "DifferentialGeometry",
+                "target": "AlgebraicTopology"
+            }
+        },
+        {
+            "data": {
+                "source": "TensorCalculus",
+                "target": "FunctionalAnalysis"
+            }
+        },
+        {
+            "data": {
+                "source": "TensorCalculus",
+                "target": "LieAlgebras"
+            }
+        },
+        {
+            "data": {
+                "source": "FunctionalAnalysis",
+                "target": "LieAlgebras"
+            }
+        },
+        {
+            "data": {
+                "source": "FunctionalAnalysis",
+                "target": "CategoryTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "AlgebraicTopology",
+                "target": "CategoryTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "AlgebraicTopology",
+                "target": "KnotTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "CategoryTheory",
+                "target": "KnotTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "CategoryTheory",
+                "target": "AdvancedCombinatorics"
+            }
+        },
+        {
+            "data": {
+                "source": "LieAlgebras",
+                "target": "KnotTheory"
+            }
+        },
+        {
+            "data": {
+                "source": "KnotTheory",
+                "target": "AdvancedCombinatorics"
+            }
+        }
+    ]
+}

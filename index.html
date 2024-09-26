@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Learning Path</title>
+        <script src="jquery-3.6.0.min.js"></script>
+        <script src="cytoscape.min.js"></script>
+        <script src="graphlib.min.js"></script>
+        <script src="dagre.min.js"></script>
+        <script src="cytoscape-dagre.js"></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <div id="cy" style="width: 100%; height: 600px; display: block;"></div>
+
+        <!-- 模态框 -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modal-title"></h2>
+                <p id="modal-body"></p>
+            </div>
+        </div>
+
+
+        <script src="main.js"></script>
+
+    </body>
+</html>
