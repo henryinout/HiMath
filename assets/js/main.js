@@ -1,6 +1,7 @@
 // 使用 cytoscape-dagre 插件
 cytoscape.use(cytoscapeDagre);
 
+
 // 使用 jQuery 的 $.getJSON 来加载 elements.json 文件
 $.getJSON('elements.json', function (data) {
     // 创建 Cytoscape 图
@@ -15,6 +16,7 @@ $.getJSON('elements.json', function (data) {
                     'label': 'data(label)',
                     'width': 40, // 初始宽度
                     'height': 40, // 初始高度
+                    'color': 'white', // 文字颜色为白色
                     'transition-property': 'background-color, width, height', // 过渡属性
                     'transition-duration': '0.2s' // 过渡持续时间 0.2 秒
                 }
@@ -23,7 +25,7 @@ $.getJSON('elements.json', function (data) {
                 selector: 'edge',
                 style: {
                     'width': 4,
-                    'line-color': '#ccc',
+                    'line-color': '#39c3bb',
                     'target-arrow-color': '#ccc',
                     'target-arrow-shape': 'triangle',
                     'line-style': 'solid',
@@ -144,6 +146,31 @@ $.getJSON('elements.json', function (data) {
         });
     });
 
+    function createShapes() {
+        const shapes = ['square', 'circle']; // 可选择的形状
+        for (let i = 0; i < 5; i++) {
+            const shape = document.createElement('div');
+            shape.classList.add('geometric-shape', shapes[Math.floor(Math.random() * shapes.length)]);
+            shape.style.width = `${Math.random() * 50 + 20}px`; // 随机宽度
+            shape.style.height = shape.style.width; // 正方形
+            
+            shape.style.top = `${Math.random() * 100}vh`; // 随机高度
+            shape.style.left = '10vw'; // 从右边生成
+            document.body.appendChild(shape);
+            
+            // 随机时间间隔生成
+            setTimeout(() => {
+                shape.style.animationDuration = `${Math.random() * 5 + 5}s`; // 随机动画时长
+            }, 0);
+        }
+    }
+    
+    createShapes();
+    
+    
+    createShapes();
+
 }).fail(function (error) {
     console.error('Error loading elements:', error);
 });
+

@@ -2,6 +2,7 @@
     width: 100%;
     height: 600px;
     display: block;
+    z-index: 2;
 }
 
 .modal {
@@ -11,23 +12,46 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(117, 117, 117, 0.5);
+    z-index: 3;
 }
 
 .modal-content {
-    background-color: white;
+    background-color: rgb(117, 117, 117);
     margin: 15% auto;
     padding: 20px;
     width: 50%;
 }
 
 .close {
-    color: #aaa;
+    color: #8f8f8f;
     float: right;
     font-size: 28px;
     cursor: pointer;
 }
 
 .close:hover {
-    color: black;
+    color: rgb(171, 43, 43);
+}
+
+
+body {
+    background-color: black; /* 添加黑色背景 */
+    overflow: hidden; /* 隐藏滚动条 */
+}
+
+.geometric-shape {
+    position: absolute;
+    border: 2px solid rgb(27, 27, 27); /* 边框颜色为白色 */
+    animation: float 80s linear infinite; /* 设置动画 */
+    z-index: 1;
+}
+
+@keyframes float {
+    from {
+        transform: translateX(100vw); /* 从右边开始 */
+    }
+    to {
+        transform: translateX(-100%); /* 向左边移动 */
+    
 }
