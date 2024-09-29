@@ -1,6 +1,6 @@
 body {
     background-color: black; /* 添加黑色背景 */
-    overflow: hidden; /* 隐藏滚动条 */
+/*    overflow: hidden; 隐藏滚动条 */
 }
 
 .geometric-shape {

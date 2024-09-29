@@ -83,7 +83,7 @@ $.getJSON('elements.json', function (data) {
                 'width': 40,  // 恢复原始宽度
                 'height': 40  // 恢复原始高度
             },
-            duration: 300  // 动画持续时间 200 毫秒
+            duration: 200  // 动画持续时间 200 毫秒
         });
     });
 
@@ -130,7 +130,7 @@ $.getJSON('elements.json', function (data) {
 
             // 设置新的偏移量
             edge.style('line-dash-offset', -dashOffset);
-        }, 10); // 每 10 毫秒更新一次
+        }, 5); // 每 5 毫秒更新一次
     });
 
     // 鼠标移出边时，恢复原来的样式并清除动画
@@ -190,10 +190,6 @@ $.getJSON('elements.json', function (data) {
         // 重新生成形状
         createShapes();
     });
-    
-
-    
-    
     createShapes();
 
 }).fail(function (error) {
