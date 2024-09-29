@@ -25,8 +25,8 @@ $.getJSON('elements.json', function (data) {
                 selector: 'edge',
                 style: {
                     'width': 4,
-                    'line-color': '#39c3bb',
-                    'target-arrow-color': '#ccc',
+                    'line-color': '#878787',
+                    'target-arrow-color': '#878787',
                     'target-arrow-shape': 'triangle',
                     'line-style': 'solid',
                     'curve-style': 'bezier', // 使用贝塞尔曲线
@@ -38,9 +38,9 @@ $.getJSON('elements.json', function (data) {
                 selector: '.highlighted-edge', // 定义传输时的边样式
                 style: {
                     'width': 4, // 保持原始宽度
-                    'line-color': '#1F1E33', // 设置红色
+                    'line-color': '#ffffff', // 设置红色
                     'line-style': 'dashed', // 设置线条为虚线以模拟传输
-                    'target-arrow-color': '#1F1E33',
+                    'target-arrow-color': '#ffffff',
                     'line-dash-pattern': [20, 10], // 设置虚线的模式（长度为10，间隙为4）
                     'line-dash-offset': 0 // 初始偏移量
                 }
@@ -66,7 +66,7 @@ $.getJSON('elements.json', function (data) {
         var node = evt.target;
         node.animate({
             style: {
-                'background-color': '#1F1E33', // 红色
+                'background-color': '#00ffff', // 红色
                 'width': 60,  // 变大
                 'height': 60  // 变大
             },
@@ -83,7 +83,7 @@ $.getJSON('elements.json', function (data) {
                 'width': 40,  // 恢复原始宽度
                 'height': 40  // 恢复原始高度
             },
-            duration: 200  // 动画持续时间 200 毫秒
+            duration: 300  // 动画持续时间 200 毫秒
         });
     });
 
@@ -146,26 +146,52 @@ $.getJSON('elements.json', function (data) {
         });
     });
 
+    // 用于存储已生成的纵坐标
+    // 用于存储已生成的纵坐标
+    const usedPositions = new Set();
+
     function createShapes() {
         const shapes = ['square', 'circle']; // 可选择的形状
+        const newPositions = new Set(); // 当前轮次的新位置
+
         for (let i = 0; i < 5; i++) {
             const shape = document.createElement('div');
             shape.classList.add('geometric-shape', shapes[Math.floor(Math.random() * shapes.length)]);
-            shape.style.width = `${Math.random() * 50 + 20}px`; // 随机宽度
+            shape.style.width = `${Math.random() * 44 + 13}px`; // 随机宽度
             shape.style.height = shape.style.width; // 正方形
-            
-            shape.style.top = `${Math.random() * 100}vh`; // 随机高度
-            shape.style.left = '10vw'; // 从右边生成
+        
+            let topPosition;
+            // 确保新的纵坐标与已使用的纵坐标不重复
+            do {
+                topPosition = `${Math.random() * 100}vh`; // 随机高度
+            } while (usedPositions.has(topPosition) || newPositions.has(topPosition));
+
+            shape.style.top = topPosition;
+            shape.style.left = '0vw'; // 从右边生成
             document.body.appendChild(shape);
-            
-            // 随机时间间隔生成
-            setTimeout(() => {
-                shape.style.animationDuration = `${Math.random() * 5 + 5}s`; // 随机动画时长
-            }, 0);
+        
+            // 设置动画时长为超过10秒
+            shape.style.animationDuration = `${Math.random() * 10 + 10}s`; // 每个正方形跨越整个屏幕的时间超过10秒
+        
+            // 添加当前的纵坐标到已使用的位置
+            newPositions.add(topPosition);
         }
+
+        // 更新已使用的位置集合
+        usedPositions.clear(); // 清空之前的记录
+        newPositions.forEach(pos => usedPositions.add(pos)); // 记录新生成的位置
     }
+
     
-    createShapes();
+    // 在窗口大小变化时，重新创建图形
+    window.addEventListener('resize', () => {
+        // 清除当前的形状
+        document.querySelectorAll('.geometric-shape').forEach(shape => shape.remove());
+        // 重新生成形状
+        createShapes();
+    });
+    
+
     
     
     createShapes();

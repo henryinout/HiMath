@@ -1,8 +1,30 @@
+body {
+    background-color: black; /* 添加黑色背景 */
+    overflow: hidden; /* 隐藏滚动条 */
+}
+
+.geometric-shape {
+    position: absolute;
+    border: 2px solid rgba(93, 100, 100, 0.226); /* 边框颜色 */
+    animation: float 15s linear infinite; /* 每个正方形跨越整个屏幕的时间 */
+    z-index: 1; /* 确保在黑色背景上层 */
+}
+
+@keyframes float {
+    from {
+        transform: translateX(100vw); /* 从右边开始 */
+    }
+    to {
+        transform: translateX(-100%); /* 向左边移动 */
+    } /* 添加右括号 */
+}
+
 #cy {
     width: 100%;
     height: 600px;
     display: block;
-    z-index: 2;
+    position: relative; /* 确保 z-index 正常工作 */
+    z-index: 2; /* Cytoscape 图层在上方 */
 }
 
 .modal {
@@ -13,7 +35,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(117, 117, 117, 0.5);
-    z-index: 3;
+    z-index: 3; /* 模态框在最上方 */
 }
 
 .modal-content {
@@ -32,26 +54,4 @@
 
 .close:hover {
     color: rgb(171, 43, 43);
-}
-
-
-body {
-    background-color: black; /* 添加黑色背景 */
-    overflow: hidden; /* 隐藏滚动条 */
-}
-
-.geometric-shape {
-    position: absolute;
-    border: 2px solid rgb(27, 27, 27); /* 边框颜色为白色 */
-    animation: float 80s linear infinite; /* 设置动画 */
-    z-index: 1;
-}
-
-@keyframes float {
-    from {
-        transform: translateX(100vw); /* 从右边开始 */
-    }
-    to {
-        transform: translateX(-100%); /* 向左边移动 */
-    
 }
