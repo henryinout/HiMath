@@ -1,4 +1,5 @@
 html, body {
+    display: flex;
     height: 100%;
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
@@ -70,6 +71,8 @@ html, body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 400px;
     width: auto;
+    max-width: auto; 
+    margin: auto;
     text-align: center;
     margin: auto; /* Center horizontally */
     position: relative; /* To position the close button inside it */
