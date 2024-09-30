@@ -1,13 +1,32 @@
-body {
-    background-color: black; /* 添加黑色背景 */
-/*    overflow: hidden; 隐藏滚动条 */
+html, body {
+    height: 100%;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    overflow: hidden; /* Prevent scrolling overflow */
+    background-color: black;
 }
 
-.geometric-shape {
-    position: absolute;
-    border: 2px solid rgba(93, 100, 100, 0.226); /* 边框颜色 */
-    animation: float 15s linear infinite; /* 每个正方形跨越整个屏幕的时间 */
-    z-index: 1; /* 确保在黑色背景上层 */
+#enter-map {
+    margin-top: 10px; /* Adds space above the button */
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#enter-map:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.geometric-shape {  
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: 2px solid rgba(93, 100, 100, 0.226); /* Border color */
+    animation: float 15s linear infinite; /* Float animation */ 
+    z-index: 1; /* Below the cytoscape graph */
 }
 
 @keyframes float {
@@ -20,38 +39,90 @@ body {
 }
 
 #cy {
-    width: 100%;
-    height: 600px;
-    display: block;
-    position: relative; /* 确保 z-index 正常工作 */
-    z-index: 2; /* Cytoscape 图层在上方 */
+    width: 100vw; /* Fill the entire viewport width */
+    height: 100vh; /* Adjust height dynamically, avoiding bottom blank space */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2; /* Ensure it's on top of the geometric shapes */
 }
 
 .modal {
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(117, 117, 117, 0.5);
-    z-index: 3; /* 模态框在最上方 */
+    z-index: 3;
+    padding: 0; /* Remove any padding to avoid double borders */
 }
 
+
+
 .modal-content {
-    background-color: rgb(117, 117, 117);
-    margin: 15% auto;
+    background-color: #ffffff;
     padding: 20px;
-    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: auto;
+    text-align: center;
+    margin: auto; /* Center horizontally */
+    position: relative; /* To position the close button inside it */
+}
+
+h2 {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+h3 {
+    font-family: Arial, sans-serif;
+}
+
+p {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+a {
+    color: #007bff;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.modal-content img {
+    
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid black;
+    display: block;
+    margin: 10px auto;
 }
 
 .close {
-    color: #8f8f8f;
-    float: right;
-    font-size: 28px;
+    position: absolute;
+    top: 10px; /* Align with the top */
+    right: 10px; /* Align with the right */
+    font-size: 20px;
+    color: #aaa;
     cursor: pointer;
 }
 
 .close:hover {
-    color: rgb(171, 43, 43);
+    color: #000;
+}
+
+.modal-content p {
+    margin-bottom: 20px; /* Adds space below the paragraph before the button */
 }

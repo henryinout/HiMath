@@ -5,6 +5,32 @@ cytoscape.use(cytoscapeDagre);
 // 使用 jQuery 的 $.getJSON 来加载 elements.json 文件
 $.getJSON('elements.json', function (data) {
     // 创建 Cytoscape 图
+
+    var $modal = $('#modal');
+    var $modalBody = $('#modal-body');
+    
+    // Show the welcome modal on page load
+    let welcomeModalHTML = `
+       <div class="modal-content" style="text-align: center;">
+           <h2>Welcome to the Math Map Guide!</h2>
+           <p>Explore the fascinating world of mathematics with this interactive map.</p>
+           <button id="enter-map">
+               Enter Math Map
+           </button>
+       </div>
+   `;
+   
+   // Inject the welcome content into the modal
+   $modalBody.html(welcomeModalHTML);
+   
+   // Show the modal on page load
+   $modal.fadeIn(200);
+
+   // Add event listener to the button to close the modal when clicked
+   $(document).on('click', '#enter-map', function() {
+       $modal.fadeOut(200); // Close the modal with a fade-out effect
+   });
+
     var cy = cytoscape({
         container: $('#cy')[0], // HTML 容器
         elements: [...data.nodes, ...data.edges], // 从 JSON 加载节点和边
@@ -39,7 +65,7 @@ $.getJSON('elements.json', function (data) {
                 style: {
                     'width': 4, // 保持原始宽度
                     'line-color': '#ffffff', // 设置红色
-                    'line-style': 'dashed', // 设置线条为虚线以模拟传输
+                    //'line-style': 'dashed', // 设置线条为虚线以模拟传输
                     'target-arrow-color': '#ffffff',
                     'line-dash-pattern': [20, 10], // 设置虚线的模式（长度为10，间隙为4）
                     'line-dash-offset': 0 // 初始偏移量
@@ -52,7 +78,9 @@ $.getJSON('elements.json', function (data) {
             edgeSep: 50,    // 控制边之间的间距
             rankSep: 100,   // 控制层级之间的距离
             nodeSep: 50     // 控制节点之间的间距
-        }
+        },
+        minZoom: 0.1,  // Minimum zoom level (25%)
+        maxZoom: 4.0    // Maximum zoom level (400%)
     });
 
     // 模态框逻辑
@@ -90,9 +118,32 @@ $.getJSON('elements.json', function (data) {
     // 点击节点事件：显示模态框
     cy.on('tap', 'node', function (evt) {
         var node = evt.target;
-        $modalTitle.text(node.data('label'));
-        $modalBody.text('Information about ' + node.data('label'));
-        $modal.fadeIn(200); // 200 毫秒的淡入动画
+        
+        // Dynamically create the modal content based on node data
+        let modalHTML = `
+            <div class="modal-content">
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <!-- Course name -->
+                    <h2>${node.data('label')}</h2>
+                    
+                    <!-- Example circular image -->
+                    <div style="border: 1px solid black; border-radius: 50%; height: 100px; width: 100px; display: flex; justify-content: center; align-items: center; margin: 20px 0;">
+                        S
+                    </div>
+    
+                    <!-- Course info -->
+                    <p>In this course you will learn about ${node.data('label')}.</p>
+                    <p>This course is created by <strong>henry_in_out</strong>, not <strong>Y-R-T</strong>.</p>
+                    <button id = "enter-map">
+                        Enter course
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Inject modal content and show it
+        $modalBody.html(modalHTML);
+        $modal.fadeIn(200); // Show the modal with a fade-in effect
     });
 
     // 点击 x 按钮关闭模态框
@@ -103,7 +154,7 @@ $.getJSON('elements.json', function (data) {
     // 点击模态框外部关闭模态框
     $(window).on('click', function (event) {
         if ($(event.target).is($modal)) {
-            $modal.fadeOut(200); // 200 毫秒的淡出动画
+            $modal.fadeOut(200);
         }
     });
 
