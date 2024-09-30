@@ -1,14 +1,16 @@
 html, body {
+    display: flex;
     height: 100%;
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
     overflow: hidden; /* Prevent scrolling overflow */
-    background-color: black;
+    background-color: black; 
+    justify-content: center;
 }
 
 .button {
     margin-top: 10px; /* Adds space above the button */
-    background-color: #007bff;
+    background-color: #0075f1;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -70,6 +72,8 @@ html, body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 400px;
     width: auto;
+    max-width: auto; 
+    margin: auto;
     text-align: center;
     margin: auto; /* Center horizontally */
     position: relative; /* To position the close button inside it */

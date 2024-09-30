@@ -1,6 +1,7 @@
 // 使用 cytoscape-dagre 插件
 cytoscape.use(cytoscapeDagre);
 var $courseBox = $('#course-box');
+$(window).on('click.closeModal', (event) => {});
 
 $courseBox.hide(); 
 
@@ -112,7 +113,7 @@ $.getJSON('elements.json', function (data) {
 
     // 点击节点事件：显示模态框
     cy.on('tap', 'node', (evt) => {
-        
+        $(window).off('click.closeModal');
         var node = evt.target;
 
         // Dynamically create the modal content based on node data
@@ -233,4 +234,3 @@ $.getJSON('elements.json', function (data) {
 }).fail(function (error) {
     console.error('Error loading elements:', error);
 });
-
