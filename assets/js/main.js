@@ -1,36 +1,30 @@
 // 使用 cytoscape-dagre 插件
 cytoscape.use(cytoscapeDagre);
+var $courseBox = $('#course-box');
+
+$courseBox.hide(); 
+
+var isCourseBoxOpen = false;
+
+
+var $welcomeModal = $('#welcome-modal');
+var $EnterMap = $('#enter-map');
+var $closeModalSpan = $('#close-modal-span')
+
+
+// Show the modal on page load
+$welcomeModal.fadeIn(200);
+
+
+// Add event listener to the button to close the modal when clicked
+$EnterMap.click(() => {
+    $welcomeModal.fadeOut(200); // Close the modal with a fade-out effect
+});
 
 
 // 使用 jQuery 的 $.getJSON 来加载 elements.json 文件
 $.getJSON('elements.json', function (data) {
     // 创建 Cytoscape 图
-
-    var $modal = $('#modal');
-    var $modalBody = $('#modal-body');
-    
-    // Show the welcome modal on page load
-    let welcomeModalHTML = `
-       <div class="modal-content" style="text-align: center;">
-           <h2>Welcome to the Math Map Guide!</h2>
-           <p>Explore the fascinating world of mathematics with this interactive map.</p>
-           <button id="enter-map">
-               Enter Math Map
-           </button>
-       </div>
-   `;
-   
-   // Inject the welcome content into the modal
-   $modalBody.html(welcomeModalHTML);
-   
-   // Show the modal on page load
-   $modal.fadeIn(200);
-
-   // Add event listener to the button to close the modal when clicked
-   $(document).on('click', '#enter-map', function() {
-       $modal.fadeOut(200); // Close the modal with a fade-out effect
-   });
-
     var cy = cytoscape({
         container: $('#cy')[0], // HTML 容器
         elements: [...data.nodes, ...data.edges], // 从 JSON 加载节点和边
@@ -84,10 +78,11 @@ $.getJSON('elements.json', function (data) {
     });
 
     // 模态框逻辑
-    var $modal = $('#modal');
     var $modalTitle = $('#modal-title');
     var $modalBody = $('#modal-body');
-    var $span = $('.close');
+
+    var $innerH2Box = $('.inner-h2-box');
+    var $courseContentBox = $('#course-content-box');
 
     // 当鼠标悬浮到节点上时，节点缓缓变大，并变为红色
     cy.on('mouseover', 'node', function (evt) {
@@ -116,46 +111,38 @@ $.getJSON('elements.json', function (data) {
     });
 
     // 点击节点事件：显示模态框
-    cy.on('tap', 'node', function (evt) {
+    cy.on('tap', 'node', (evt) => {
+        
         var node = evt.target;
-        
+
         // Dynamically create the modal content based on node data
-        let modalHTML = `
-            <div class="modal-content">
-                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    <!-- Course name -->
-                    <h2>${node.data('label')}</h2>
-                    
-                    <!-- Example circular image -->
-                    <div style="border: 1px solid black; border-radius: 50%; height: 100px; width: 100px; display: flex; justify-content: center; align-items: center; margin: 20px 0;">
-                        S
-                    </div>
-    
-                    <!-- Course info -->
-                    <p>In this course you will learn about ${node.data('label')}.</p>
-                    <p>This course is created by <strong>henry_in_out</strong>, not <strong>Y-R-T</strong>.</p>
-                    <button id = "enter-map">
-                        Enter course
-                    </button>
-                </div>
-            </div>
-        `;
-        
-        // Inject modal content and show it
-        $modalBody.html(modalHTML);
-        $modal.fadeIn(200); // Show the modal with a fade-in effect
+        let modalH2 = `<h2>${node.data('label')}</h2>`;
+        let modalP = `<p>In this course you will learn about ${node.data('label')}.</p>`;
+
+        $innerH2Box.html(modalH2);
+        $courseContentBox.html(modalP);
+
+        $courseBox.fadeIn(200); // Show the modal with a fade-in effect
+        isCourseBoxOpen = true;
+        // 在显示模态框后，短暂延迟再绑定 window 的点击事件，避免立即关闭
+        setTimeout(() => {
+            $(window).on('click.closeModal', (event) => {
+                // 确保点击事件不在模态框内部触发关闭逻辑
+                if (!$(event.target).closest('#course-box').length && !$(event.target).closest('.cytoscape-node').length) {
+                    $courseBox.fadeOut(200); // 关闭模态框
+                    isCourseBoxOpen = false;
+
+                    // 解除 window 的 click 事件绑定，防止重复绑定
+                    $(window).off('click.closeModal');
+                }
+            });
+        }, 100); // 延迟100毫秒再绑定点击事件
     });
 
     // 点击 x 按钮关闭模态框
-    $span.on('click', function () {
-        $modal.fadeOut(200); // 200 毫秒的淡出动画
-    });
-
-    // 点击模态框外部关闭模态框
-    $(window).on('click', function (event) {
-        if ($(event.target).is($modal)) {
-            $modal.fadeOut(200);
-        }
+    $closeModalSpan.click(() => {
+        $courseBox.fadeOut(200); // 200 毫秒的淡出动画
+        isCourseBoxOpen = false;
     });
 
     // 存储边动画定时器
@@ -210,7 +197,7 @@ $.getJSON('elements.json', function (data) {
             shape.classList.add('geometric-shape', shapes[Math.floor(Math.random() * shapes.length)]);
             shape.style.width = `${Math.random() * 44 + 13}px`; // 随机宽度
             shape.style.height = shape.style.width; // 正方形
-        
+
             let topPosition;
             // 确保新的纵坐标与已使用的纵坐标不重复
             do {
@@ -220,10 +207,10 @@ $.getJSON('elements.json', function (data) {
             shape.style.top = topPosition;
             shape.style.left = '0vw'; // 从右边生成
             document.body.appendChild(shape);
-        
+
             // 设置动画时长为超过10秒
             shape.style.animationDuration = `${Math.random() * 10 + 10}s`; // 每个正方形跨越整个屏幕的时间超过10秒
-        
+
             // 添加当前的纵坐标到已使用的位置
             newPositions.add(topPosition);
         }
@@ -233,7 +220,7 @@ $.getJSON('elements.json', function (data) {
         newPositions.forEach(pos => usedPositions.add(pos)); // 记录新生成的位置
     }
 
-    
+
     // 在窗口大小变化时，重新创建图形
     window.addEventListener('resize', () => {
         // 清除当前的形状

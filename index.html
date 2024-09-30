@@ -15,12 +15,32 @@
 
         <div id="cy" style="width: 100%; height: 100%; display: block;"></div>
 
+
         <!-- Cytoscape Modal (for node information) -->
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2 id="modal-title"></h2>
-                <p id="modal-body"></p>
+
+        <div id="course-box" class="modal-box" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div id="modal-h2-box"></div>
+            <span id="close-modal-span" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px;">&times;</span>
+
+            <!-- Example circular image -->
+            <div style="border: 1px solid black; border-radius: 50%; height: 100px; width: 100px; display: flex; justify-content: center; align-items: center; margin: 20px 0;">S</div>
+            <!-- Course info -->
+            <div id="course-content-box"></div>
+            <p>This course is created by <strong>henry_in_out</strong>, not <strong>Y-R-T</strong>.</p>
+            
+            <button id = "enter-course-button" class="button">
+                Enter course
+            </button>
+        </div>
+
+        <div id="welcome-modal">
+            <div class="modal-box" style="text-align: center;">
+                <h2>Welcome to the Math Map Guide!</h2>
+                <p>Explore the fascinating world of mathematics with this
+                    interactive map.</p>
+                <button id="enter-map" class="button">
+                    Enter Math Map
+                </button>
             </div>
         </div>
 

@@ -6,7 +6,7 @@ html, body {
     background-color: black;
 }
 
-#enter-map {
+.button {
     margin-top: 10px; /* Adds space above the button */
     background-color: #007bff;
     color: white;
@@ -47,7 +47,9 @@ html, body {
     z-index: 2; /* Ensure it's on top of the geometric shapes */
 }
 
-.modal {
+
+
+#welcome-modal {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,9 +63,7 @@ html, body {
     padding: 0; /* Remove any padding to avoid double borders */
 }
 
-
-
-.modal-content {
+.modal-box {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
@@ -73,6 +73,7 @@ html, body {
     text-align: center;
     margin: auto; /* Center horizontally */
     position: relative; /* To position the close button inside it */
+    z-index: 4; /* Ensure it's on top of the background */
 }
 
 h2 {
