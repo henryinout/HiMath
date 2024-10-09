@@ -146,43 +146,41 @@ $.getJSON('elements.json', function (data) {
         isCourseBoxOpen = false;
     });
 
-    // 存储边动画定时器
-    var edgeTimers = {};
-
-    // 当鼠标悬浮在边上时，进行传输动画
-    cy.on('mouseover', 'edge', function (evt) {
+    cy.on('mouseover', 'edge', (evt) => {
         var edge = evt.target;
-        edge.addClass('highlighted-edge'); // 添加样式
-
-        var dashOffset = 0; // 虚线初始偏移量
-        var dashPatternLength = 30; // 虚线模式的总长度（10 + 4）
-
-        // 启动动画定时器
-        edgeTimers[edge.id()] = setInterval(function () {
-            // 更新虚线的偏移量，使虚线看起来在移动
-            dashOffset += 1; // 每次偏移量加1，可以调节速度
-
-            // 如果偏移量超过虚线模式的总长度，则重置偏移量
-            if (dashOffset > dashPatternLength) {
-                dashOffset = 0; // 重置偏移量，继续循环
-            }
-
-            // 设置新的偏移量
-            edge.style('line-dash-offset', -dashOffset);
-        }, 5); // 每 5 毫秒更新一次
+        if (!edge.classes().includes('highlighting')) {
+            edge.addClass('highlighting');
+            // 先停止当前动画，确保新动画不会和旧动画冲突
+            edge.stop();
+            edge.animate({
+                style: {
+                    'line-color': '#ffffff',
+                    'target-arrow-color': '#ffffff',
+                }
+            }, {
+                duration: 500,  
+                easing: 'ease-in-out'
+            });
+        }
     });
-
+    
     // 鼠标移出边时，恢复原来的样式并清除动画
-    cy.on('mouseout', 'edge', function (evt) {
+    cy.on('mouseout', 'edge', (evt) => {
         var edge = evt.target;
-        edge.removeClass('highlighted-edge'); // 移除样式
-        clearInterval(edgeTimers[edge.id()]); // 清除定时器
-        delete edgeTimers[edge.id()]; // 删除定时器记录
-
-        // 恢复原始样式
-        edge.style({
-            'line-dash-offset': 0 // 恢复偏移量
-        });
+        if (edge.classes().includes('highlighting')) {
+            edge.removeClass('highlighting');
+            // 停止当前的动画，然后启动恢复原始颜色的动画
+            edge.stop(); 
+            edge.animate({
+                style: {
+                    'line-color': '#878787',
+                    'target-arrow-color': '#878787',
+                }
+            }, {
+                duration: 500,  
+                easing: 'ease-in-out'
+            });
+        }
     });
 
     // 用于存储已生成的纵坐标
