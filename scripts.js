@@ -11,21 +11,49 @@ const questions = {
     3: {
         title: "Question 3",
         content: "Find the area of a triangle with vertices at (0, 0), (4, 0), and (0, 3)."
+    },
+    4: {
+        title: "Question 4",
+        content: "What is the smallest positive integer that is divisible by 2, 3, and 7?"
+    },
+    5: {
+        title: "Question 5",
+        content: "If a rectangle has an area of 24 and a perimeter of 20, what are its dimensions?"
     }
 };
 
-// Toggle dropdown visibility
-function toggleDropdown() {
-    const dropdown = document.getElementById("dropdown-menu");
-    dropdown.classList.toggle("visible");
-}
+// Dynamically load questions into dropdown menu
+const dropdownMenu = document.getElementById("dropdown-menu");
+Object.keys(questions).forEach(questionNumber => {
+    const menuItem = document.createElement("div");
+    menuItem.classList.add("menu-item");
+    menuItem.textContent = `题目 ${questionNumber}`;
+    menuItem.onclick = () => selectQuestion(questionNumber);
+    dropdownMenu.appendChild(menuItem);
+});
+
+// Dropdown Logic
+const dropdownBtn = document.querySelector('.dropdown-btn');
+
+dropdownBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent click from closing menu immediately
+    dropdownMenu.classList.toggle('active');
+    dropdownBtn.classList.toggle('active');
+});
+
+// Close dropdown if clicking outside
+document.addEventListener('click', () => {
+    dropdownMenu.classList.remove('active');
+    dropdownBtn.classList.remove('active');
+});
 
 // Select a question
 function selectQuestion(questionNumber) {
     const question = questions[questionNumber];
     document.getElementById("question-title").textContent = question.title;
     document.getElementById("question-content").textContent = question.content;
-    toggleDropdown(); // Close the dropdown
+    dropdownMenu.classList.remove('active');
+    dropdownBtn.classList.remove('active');
 }
 
 // Handle answer submission
