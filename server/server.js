@@ -105,6 +105,7 @@ app.post("/api/register", async (req, res) => {
 // =========================
 // User Login
 // =========================
+
 app.post("/api/login", async (req, res) => {
     const { username, password } = req.body;
 
@@ -119,6 +120,8 @@ app.post("/api/login", async (req, res) => {
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) return res.status(400).json({ error: "Invalid username or password." });
+
+        console.log("User found:", user); // 添加日志以检查 role 字段
 
         // Generate JWT Token with role
         const token = jwt.sign(
