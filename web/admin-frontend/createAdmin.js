@@ -55,7 +55,7 @@ async function createAdmin(username, password) {
 }
 
 // 替换为您的管理员用户名和密码
-const adminUsername = "admin";
-const adminPassword = "2:5Y8YGkmGdY2yJ"; // 替换为强密码
+const adminUsername = "h";
+const adminPassword = "h"; // 替换为强密码
 
 createAdmin(adminUsername, adminPassword);
