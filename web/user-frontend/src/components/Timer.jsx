@@ -1,3 +1,4 @@
+// src/components/Timer.jsx
 import React, { useState, useEffect } from "react";
 
 const Timer = ({ durationInSeconds, onTimeUp }) => {

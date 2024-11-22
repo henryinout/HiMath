@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
@@ -8,7 +9,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// MongoDB connection
+// =========================
+// MongoDB Connection
+// =========================
 mongoose.connect("mongodb://localhost:27017/math_game", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -21,7 +24,11 @@ db.once("open", () => {
     console.log("Connected to MongoDB");
 });
 
-// MongoDB Schemas
+// =========================
+// MongoDB Schemas and Models
+// =========================
+
+// User Schema
 const userSchema = new mongoose.Schema({
     username: { type: String, unique: true, index: true },
     password: String,
@@ -31,6 +38,7 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model("User", userSchema);
 
+// Question Schema
 const questionSchema = new mongoose.Schema({
     title: String,
     content: String,
@@ -40,6 +48,7 @@ const questionSchema = new mongoose.Schema({
 });
 const Question = mongoose.model("Question", questionSchema);
 
+// Competition Schema
 const competitionSchema = new mongoose.Schema({
     name: String,
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question" }],
@@ -51,10 +60,41 @@ const competitionSchema = new mongoose.Schema({
 });
 const Competition = mongoose.model("Competition", competitionSchema);
 
-// JWT Secret Key
-const JWT_SECRET = "your_secret_key_here";
+// Submission Schema - 用于实时提交答案
+const submissionSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    competitionId: { type: mongoose.Schema.Types.ObjectId, ref: "Competition" },
+    questionId: { type: mongoose.Schema.Types.ObjectId, ref: "Question" },
+    answer: String,
+    timestamp: { type: Date, default: Date.now },
+});
+const Submission = mongoose.model("Submission", submissionSchema);
 
-// Middleware to authenticate JWT Token
+// FinalSubmission Schema - 用于统一提交所有答案
+const finalSubmissionSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    competitionId: { type: mongoose.Schema.Types.ObjectId, ref: "Competition" },
+    answers: [
+        {
+            questionId: { type: mongoose.Schema.Types.ObjectId, ref: "Question" },
+            answer: String,
+            timestamp: Date,
+        }
+    ],
+    submittedAt: { type: Date, default: Date.now },
+});
+const FinalSubmission = mongoose.model("FinalSubmission", finalSubmissionSchema);
+
+// =========================
+// JWT Secret Key
+// =========================
+const JWT_SECRET = "your_secret_key_here"; // 建议使用环境变量来存储
+
+// =========================
+// Middleware
+// =========================
+
+// Authenticate JWT Token
 function authenticateToken(req, res, next) {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(' ')[1]; // Expecting 'Bearer TOKEN'
@@ -68,7 +108,7 @@ function authenticateToken(req, res, next) {
     });
 }
 
-// Middleware to verify Admin role
+// Authenticate Admin Role
 function authenticateAdmin(req, res, next) {
     if (req.user.role !== "admin") {
         return res.status(403).json({ error: "Access denied. Admins only." });
@@ -77,8 +117,12 @@ function authenticateAdmin(req, res, next) {
 }
 
 // =========================
-// User Registration
+// Routes
 // =========================
+
+// -------------------------
+// User Registration
+// -------------------------
 app.post("/api/register", async (req, res) => {
     const { username, password } = req.body;
 
@@ -102,10 +146,9 @@ app.post("/api/register", async (req, res) => {
     }
 });
 
-// =========================
+// -------------------------
 // User Login
-// =========================
-
+// -------------------------
 app.post("/api/login", async (req, res) => {
     const { username, password } = req.body;
 
@@ -121,8 +164,6 @@ app.post("/api/login", async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) return res.status(400).json({ error: "Invalid username or password." });
 
-        console.log("User found:", user); // 添加日志以检查 role 字段
-
         // Generate JWT Token with role
         const token = jwt.sign(
             { id: user._id, username: user.username, role: user.role },
@@ -136,9 +177,9 @@ app.post("/api/login", async (req, res) => {
     }
 });
 
-// =========================
+// -------------------------
 // Protected Routes
-// =========================
+// -------------------------
 
 // Create a question
 app.post("/api/questions", authenticateToken, async (req, res) => {
@@ -266,9 +307,9 @@ app.post("/api/competitions/:competitionId/add-user", authenticateToken, async (
     }
 });
 
-// =========================
+// -------------------------
 // Admin Routes
-// =========================
+// -------------------------
 
 const adminRouter = express.Router();
 
@@ -553,6 +594,156 @@ adminRouter.delete("/competitions/:id", async (req, res) => {
 
 // Mount admin router
 app.use("/api/admin", adminRouter);
+
+// -------------------------
+// Real-time Answer Submission Routes
+// -------------------------
+
+// Real-time submit answer
+app.post("/api/submit", authenticateToken, async (req, res) => {
+    const { questionId, answer, timestamp } = req.body;
+
+    // Validate input
+    if (!questionId || !answer) {
+        return res.status(400).json({ error: "questionId 和 answer 是必需的。" });
+    }
+
+    try {
+        // Find competition containing this question
+        const competition = await Competition.findOne({ questions: questionId });
+        if (!competition) {
+            return res.status(404).json({ error: "未找到相关的竞赛。" });
+        }
+
+        // Check if user is authorized for this competition
+        const isAuthorized = competition.authorizedUsers.some(
+            (userId) => userId.toString() === req.user.id
+        );
+        if (!isAuthorized) {
+            return res.status(403).json({ error: "您没有权限参加此竞赛。" });
+        }
+
+        // Create submission record
+        await Submission.create({
+            userId: req.user.id,
+            competitionId: competition._id,
+            questionId,
+            answer,
+            timestamp: timestamp || Date.now(),
+        });
+
+        res.status(201).json({ message: "答案已提交。" });
+    } catch (err) {
+        console.error("提交答案失败：", err);
+        res.status(500).json({ error: "内部服务器错误。" });
+    }
+});
+
+// Final submit all answers
+app.post("/api/final-submit", authenticateToken, async (req, res) => {
+    const { answers } = req.body; // answers 是一个对象，键为 questionId，值为数组的提交记录
+
+    if (!answers || typeof answers !== 'object') {
+        return res.status(400).json({ error: "answers 是必需的且必须是对象。" });
+    }
+
+    try {
+        const competitionIds = new Set();
+        const answerEntries = Object.entries(answers);
+
+        for (const [questionId, submissions] of answerEntries) {
+            // Find competition containing this question
+            const competition = await Competition.findOne({ questions: questionId });
+            if (competition) {
+                // Check if user is authorized for this competition
+                const isAuthorized = competition.authorizedUsers.some(
+                    (userId) => userId.toString() === req.user.id
+                );
+                if (!isAuthorized) {
+                    continue; // Skip unauthorized competitions
+                }
+
+                competitionIds.add(competition._id.toString());
+
+                // Save each submission
+                for (const submission of submissions) {
+                    const { answer, timestamp } = submission;
+                    if (answer) { // Ensure answer is not empty
+                        await Submission.create({
+                            userId: req.user.id,
+                            competitionId: competition._id,
+                            questionId,
+                            answer,
+                            timestamp: timestamp || Date.now(),
+                        });
+                    }
+                }
+            }
+        }
+
+        // Create final submission record
+        await FinalSubmission.create({
+            userId: req.user.id,
+            competitionId: Array.from(competitionIds),
+            answers: answerEntries.flatMap(([questionId, submissions]) =>
+                submissions.map(sub => ({
+                    questionId,
+                    answer: sub.answer,
+                    timestamp: sub.timestamp,
+                }))
+            ),
+        });
+
+        res.json({ message: "所有答案已统一提交。" });
+    } catch (err) {
+        console.error("统一提交失败：", err);
+        res.status(500).json({ error: "内部服务器错误。" });
+    }
+});
+
+// -------------------------
+// Results Route
+// -------------------------
+
+// Get user exam results
+app.get("/api/results", authenticateToken, async (req, res) => {
+    try {
+        // Get all final submissions for the user
+        const finalSubmissions = await FinalSubmission.find({ userId: req.user.id })
+            .populate("competitionId", "name");
+
+        // Example scoring logic: count correct answers
+        // In a real scenario, you should compare with correct answers stored in the Question model
+        const results = [];
+
+        for (const submission of finalSubmissions) {
+            const competition = submission.competitionId;
+            let score = 0;
+
+            for (const ans of submission.answers) {
+                const question = await Question.findById(ans.questionId);
+                if (question && question.answer.toLowerCase() === ans.answer.toLowerCase()) {
+                    score += 1;
+                }
+            }
+
+            // Example ranking logic (static as placeholder)
+            const rank = 1; // Replace with actual ranking logic based on scores
+
+            results.push({
+                competitionId: competition._id,
+                competitionName: competition.name,
+                score,
+                rank,
+            });
+        }
+
+        res.json(results);
+    } catch (err) {
+        console.error("获取成绩失败：", err);
+        res.status(500).json({ error: "内部服务器错误。" });
+    }
+});
 
 // =========================
 // Start the Server

@@ -1,30 +1,38 @@
+// src/pages/Exam.jsx
 import React, { useEffect, useState } from "react";
 import Dropdown from "../components/Dropdown";
 import Timer from "../components/Timer";
 import QuestionCard from "../components/QuestionCard";
+import AnswerHistory from "../components/AnswerHistory";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
 const Exam = () => {
     const [questions, setQuestions] = useState({});
     const [selectedQuestionId, setSelectedQuestionId] = useState(null);
-    const [answer, setAnswer] = useState("");
+    const [answers, setAnswers] = useState({});
+    const [answerInput, setAnswerInput] = useState("");
+    const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
     useEffect(() => {
         if (!token) {
             alert("您需要先登录！");
-            window.location.href = "/login";
+            navigate("/login");
         } else {
             fetchQuestions();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
+    // 从后台获取题目
     const fetchQuestions = async () => {
         try {
             const response = await axios.get("http://localhost:3000/api/questions", {
-                headers: { Authorization: token },
+                headers: { Authorization: `Bearer ${token}` },
             });
+            // 假设后台返回的是一个对象，键为题目编号，值为题目信息
             setQuestions(response.data);
             setSelectedQuestionId(Object.keys(response.data)[0]); // 默认选择第一题
         } catch (error) {
@@ -32,38 +40,73 @@ const Exam = () => {
         }
     };
 
+    // 实时提交答案
     const handleSubmitAnswer = async () => {
-        if (!answer.trim()) {
+        if (!answerInput.trim()) {
             alert("请输入答案！");
             return;
         }
 
+        const currentAnswer = {
+            questionId: selectedQuestionId,
+            answer: answerInput.trim(),
+            timestamp: new Date().toISOString(),
+        };
+
         try {
-            const response = await axios.post(
+            await axios.post(
                 "http://localhost:3000/api/submit",
+                currentAnswer,
                 {
-                    questionId: selectedQuestionId,
-                    answer,
-                },
-                {
-                    headers: { Authorization: token },
+                    headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            alert(response.data.correct ? "答案正确！" : "答案错误，请再试一次！");
-            setAnswer("");
+
+            // 本地保存提交记录
+            setAnswers((prevAnswers) => ({
+                ...prevAnswers,
+                [selectedQuestionId]: [
+                    ...(prevAnswers[selectedQuestionId] || []),
+                    currentAnswer,
+                ],
+            }));
+
+            setAnswerInput(""); // 清空答案输入框
+            alert("答案已提交！");
         } catch (error) {
+            console.error("提交失败：", error);
             alert("提交失败，请稍后再试！");
         }
     };
 
+    // 统一提交所有答案
+    const finalSubmit = async () => {
+        try {
+            await axios.post(
+                "http://localhost:3000/api/final-submit",
+                { answers },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            alert("考试已完成，所有答案已提交！");
+            navigate("/results"); // 跳转到成绩查询页面
+        } catch (error) {
+            console.error("统一提交失败：", error);
+            alert("统一提交失败，请稍后再试！");
+        }
+    };
+
     const handleTimeUp = () => {
-        alert("时间到了！");
+        alert("时间到了，正在提交考试...");
+        finalSubmit(); // 时间结束时自动提交
     };
 
     const selectedQuestion = questions[selectedQuestionId];
 
     return (
         <div>
+            {/* Header Section */}
             <header className="bg-primary text-white py-3">
                 <div className="container d-flex justify-content-between align-items-center">
                     <h1 className="fs-4 m-0">HiMath Team Round</h1>
@@ -71,28 +114,43 @@ const Exam = () => {
                 </div>
             </header>
 
+            {/* Main Content Section */}
             <div className="container-fluid mt-3">
                 <div className="row">
+                    {/* Left Panel */}
                     <div className="col-lg-8 col-md-7">
+                        {/* Dropdown for selecting questions */}
                         <Dropdown
                             questions={questions}
                             onSelectQuestion={setSelectedQuestionId}
                         />
+
+                        {/* Question Area */}
                         <QuestionCard question={selectedQuestion} />
-                        <div>
+
+                        {/* Answer Area */}
+                        <div className="mb-3">
                             <input
                                 type="text"
                                 className="form-control mb-2"
-                                value={answer}
-                                onChange={(e) => setAnswer(e.target.value)}
+                                value={answerInput}
+                                onChange={(e) => setAnswerInput(e.target.value)}
                                 placeholder="请输入答案"
                             />
                             <button className="btn btn-success" onClick={handleSubmitAnswer}>
                                 提交答案
                             </button>
                         </div>
+
+                        {/* Answer History */}
+                        <AnswerHistory history={answers[selectedQuestionId]} />
                     </div>
-                    <div className="col-lg-4 col-md-5 bg-light d-flex justify-content-center align-items-center">
+
+                    {/* Right Panel */}
+                    <div className="col-lg-4 col-md-5 bg-light d-flex flex-column justify-content-center align-items-center">
+                        <button className="btn btn-danger mb-3" onClick={finalSubmit}>
+                            提交并完成考试
+                        </button>
                         <p className="text-muted">聊天室功能开发中...</p>
                     </div>
                 </div>

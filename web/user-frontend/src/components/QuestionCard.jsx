@@ -1,3 +1,4 @@
+// src/components/QuestionCard.jsx
 import React from "react";
 
 const QuestionCard = ({ question }) => {
