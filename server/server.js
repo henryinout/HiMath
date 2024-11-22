@@ -50,11 +50,12 @@ const Question = mongoose.model("Question", questionSchema);
 
 // Competition Schema
 const competitionSchema = new mongoose.Schema({
-    name: String,
+    name: { type: String, required: true },
+    description: { type: String, default: '' }, // 新增描述字段
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question" }],
     authorizedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    startTime: Date,
-    endTime: Date,
+    startTime: { type: Date, required: true },
+    endTime: { type: Date, required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     createdAt: { type: Date, default: Date.now },
 });
@@ -88,7 +89,7 @@ const FinalSubmission = mongoose.model("FinalSubmission", finalSubmissionSchema)
 // =========================
 // JWT Secret Key
 // =========================
-const JWT_SECRET = "your_secret_key_here"; // 建议使用环境变量来存储
+const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key_here"; // 建议使用环境变量来存储
 
 // =========================
 // Middleware
@@ -171,7 +172,8 @@ app.post("/api/login", async (req, res) => {
             { expiresIn: "1h" }
         );
 
-        res.json({ token });
+        // 返回用户ID用于前端权限判断
+        res.json({ token, userId: user._id });
     } catch (err) {
         res.status(500).json({ error: "Internal server error." });
     }
@@ -200,7 +202,7 @@ app.post("/api/questions", authenticateToken, async (req, res) => {
 
 // Create a competition
 app.post("/api/competitions", authenticateToken, async (req, res) => {
-    const { name, questionIds, userIds, startTime, endTime } = req.body;
+    const { name, description, questionIds, userIds, startTime, endTime } = req.body;
 
     // Validate input
     if (!name || !questionIds || !startTime || !endTime) {
@@ -210,6 +212,7 @@ app.post("/api/competitions", authenticateToken, async (req, res) => {
     try {
         const competition = await Competition.create({
             name,
+            description, // 新增描述字段
             questions: questionIds,
             authorizedUsers: userIds,
             startTime,
@@ -231,19 +234,52 @@ app.post("/api/competitions", authenticateToken, async (req, res) => {
     }
 });
 
-// Get all competitions for a user
+// Get all competitions with access information
 app.get("/api/competitions", authenticateToken, async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).populate({
-            path: "competitions",
-            populate: { path: "questions", select: "title content tags" },
-        });
+        const competitions = await Competition.find()
+            .populate("questions")
+            .populate("authorizedUsers", "username"); // 只返回用户名
 
-        if (!user) return res.status(404).json({ error: "User not found." });
+        const userId = req.user.id;
 
-        res.json(user.competitions);
+        // 构建响应数据，指示用户是否有权限参与
+        const competitionList = competitions.map(comp => ({
+            _id: comp._id,
+            name: comp.name,
+            description: comp.description,
+            startTime: comp.startTime,
+            endTime: comp.endTime,
+            hasAccess: comp.authorizedUsers.some(user => user._id.toString() === userId),
+        }));
+
+        res.json(competitionList);
     } catch (err) {
-        res.status(500).json({ error: "Internal server error." });
+        console.error(err);
+        res.status(500).json({ error: "Unable to fetch competitions." });
+    }
+});
+
+// Get competition details with access information
+app.get("/api/competitions/:competitionId", authenticateToken, async (req, res) => {
+    const { competitionId } = req.params;
+
+    try {
+        const competition = await Competition.findById(competitionId)
+            .populate("questions")
+            .populate("authorizedUsers", "username");
+
+        if (!competition) {
+            return res.status(404).json({ error: "Competition not found." });
+        }
+
+        const userId = req.user.id;
+        const hasAccess = competition.authorizedUsers.some(user => user._id.toString() === userId);
+
+        res.json({ competition, hasAccess });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Unable to fetch competition details." });
     }
 });
 
@@ -504,7 +540,7 @@ adminRouter.get("/competitions", async (req, res) => {
 
 // Create a new competition
 adminRouter.post("/competitions", async (req, res) => {
-    const { name, questionIds, userIds, startTime, endTime } = req.body;
+    const { name, description, questionIds, userIds, startTime, endTime } = req.body;
 
     // Validate input
     if (!name || !questionIds || !startTime || !endTime) {
@@ -514,6 +550,7 @@ adminRouter.post("/competitions", async (req, res) => {
     try {
         const competition = await Competition.create({
             name,
+            description, // 新增描述字段
             questions: questionIds,
             authorizedUsers: userIds,
             startTime,
@@ -538,17 +575,18 @@ adminRouter.post("/competitions", async (req, res) => {
 // Update a competition
 adminRouter.put("/competitions/:id", async (req, res) => {
     const { id } = req.params;
-    const { name, questionIds, userIds, startTime, endTime } = req.body;
+    const { name, description, questionIds, userIds, startTime, endTime } = req.body;
 
     try {
         const competition = await Competition.findById(id);
         if (!competition) return res.status(404).json({ error: "Competition not found." });
 
         if (name) competition.name = name;
+        if (description) competition.description = description; // 更新描述
         if (questionIds) competition.questions = questionIds;
         if (userIds) competition.authorizedUsers = userIds;
-        if (startTime) competition.startTime = startTime;
-        if (endTime) competition.endTime = endTime;
+        if (startTime) competition.startTime = new Date(startTime);
+        if (endTime) competition.endTime = new Date(endTime);
 
         await competition.save();
 
@@ -592,7 +630,9 @@ adminRouter.delete("/competitions/:id", async (req, res) => {
     }
 });
 
+// -------------------------
 // Mount admin router
+// -------------------------
 app.use("/api/admin", adminRouter);
 
 // -------------------------
@@ -748,7 +788,7 @@ app.get("/api/results", authenticateToken, async (req, res) => {
 // =========================
 // Start the Server
 // =========================
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

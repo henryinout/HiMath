@@ -1,18 +1,28 @@
 // src/components/QuestionCard.jsx
-import React from "react";
+
+import React from 'react';
+import { Card } from 'react-bootstrap';
 
 const QuestionCard = ({ question }) => {
-    if (!question) {
-        return <p>请选择一个题目。</p>;
-    }
+    if (!question) return null;
 
     return (
-        <div className="card mb-3">
-            <div className="card-body">
-                <h5 className="card-title">{question.title}</h5>
-                <p className="card-text">{question.content}</p>
-            </div>
-        </div>
+        <Card className="mb-3">
+            <Card.Body>
+                <Card.Title>{question.title}</Card.Title>
+                <Card.Text>{question.content}</Card.Text>
+                {/* 如果需要展示题目标签 */}
+                {question.tags && question.tags.length > 0 && (
+                    <div>
+                        {question.tags.map(tag => (
+                            <span key={tag} className="badge bg-secondary me-1">
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                )}
+            </Card.Body>
+        </Card>
     );
 };
 

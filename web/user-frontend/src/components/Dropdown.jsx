@@ -1,25 +1,24 @@
 // src/components/Dropdown.jsx
-import React from "react";
-import "./Dropdown.css"; // 可选：为组件添加独立样式
 
-const Dropdown = ({ questions, onSelectQuestion }) => {
+import React from 'react';
+import { Form } from 'react-bootstrap';
+
+const Dropdown = ({ questions, onSelectQuestion, selectedQuestionId }) => {
+    const handleChange = (e) => {
+        onSelectQuestion(e.target.value);
+    };
+
     return (
-        <div className="dropdown-container">
-            <button className="dropdown-btn btn btn-primary">
-                选择题目 <span className="arrow-down">▼</span>
-            </button>
-            <div className="dropdown-menu">
-                {Object.keys(questions).map((id) => (
-                    <div
-                        key={id}
-                        className="menu-item"
-                        onClick={() => onSelectQuestion(id)}
-                    >
-                        题目 {id}
-                    </div>
+        <Form.Group controlId="questionDropdown" className="mb-3">
+            <Form.Label>选择题目</Form.Label>
+            <Form.Control as="select" value={selectedQuestionId || ''} onChange={handleChange}>
+                {questions.map(question => (
+                    <option key={question._id} value={question._id}>
+                        {question.title}
+                    </option>
                 ))}
-            </div>
-        </div>
+            </Form.Control>
+        </Form.Group>
     );
 };
 

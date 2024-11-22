@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../styles/styles.css";
 
 const Exam = () => {
-    const { competitionId } = useParams(); // 获取 URL 参数
+    const { competitionId } = useParams();
     const [questions, setQuestions] = useState([]);
     const [selectedQuestionId, setSelectedQuestionId] = useState(null);
     const [answers, setAnswers] = useState({});
@@ -56,11 +56,6 @@ const Exam = () => {
     const handleSubmitAnswer = async () => {
         if (!answerInput.trim()) {
             alert("请输入答案！");
-            return;
-        }
-
-        if (!selectedQuestionId) {
-            alert("请选择一个题目！");
             return;
         }
 
