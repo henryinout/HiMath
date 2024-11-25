@@ -1,6 +1,6 @@
 // src/pages/Users/UserList.jsx
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import api from '../../services/api';
 import { Link } from 'react-router-dom';
 

@@ -1,70 +1,162 @@
 /* src/components/Dropdown.css */
 
-.dropdown-container {
+/* 主容器 */
+.custom-dropdown {
     position: relative;
-    display: inline-block;
+    display: block; /* 填满父容器的宽度 */
+    width: 100%;
+    margin-bottom: 20px; /* 添加下边距以分隔按钮和题目框 */
+    box-sizing: border-box; /* 确保内边距不影响总宽度 */
 }
 
-.dropdown-btn {
-    background-color: #007BFF;
+/* 按钮样式 */
+.custom-dropdown-toggle {
+    background-color: #007BFF; /* 主题蓝色 */
     color: white;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    display: flex;
+    display: inline-block; /* 固定宽度 */
     align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 130px; /* 固定宽度，根据需要调整 */
+    box-sizing: border-box; /* 包含内边距在宽度内 */
 }
 
-.dropdown-btn .arrow-down {
+.custom-dropdown-toggle:hover {
+    background-color: #0056b3; /* 深蓝色 */
+}
+
+/* 箭头图标 */
+.arrow {
+    display: inline-block;
+    width: 0; 
+    height: 0; 
     margin-left: 10px;
+    vertical-align: middle;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
     transition: transform 0.3s ease;
 }
 
-.dropdown-btn.active .arrow-down {
-    transform: rotate(180deg);
+.arrow.down {
+    border-top: 8px solid white;
 }
 
+.arrow.up {
+    border-bottom: 8px solid white;
+}
+
+/* 菜单样式 */
 .dropdown-menu {
     position: absolute;
-    top: 100%;
+    top: 110%;
     left: 0;
-    display: flex;
-    flex-direction: row; /* 横向排列 */
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
+    background-color: white;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    overflow: hidden;
-    transform: translateY(-20px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    min-width: 200px; /* 与按钮宽度一致 */
+    max-width: 100%; /* 不超过父容器宽度 */
+    width: 100%; /* 填满父容器宽度 */
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
     z-index: 1000;
-    padding: 0 10px; /* 让内容更紧凑 */
+    overflow-x: hidden; /* 防止水平滚动条 */
+    overflow-y: auto; /* 允许垂直滚动 */
+    box-sizing: border-box; /* 包含内边距在宽度内 */
 }
 
-.dropdown-menu.active {
-    visibility: visible;
+.dropdown-menu.show {
     opacity: 1;
-    transform: translateY(0);
+    visibility: visible;
+    transform: scaleY(1);
 }
 
-.menu-item {
+/* 菜单项容器 */
+.dropdown-items {
+    display: flex;
+    flex-direction: row; /* 确保水平排列 */
+    flex-wrap: wrap; /* 允许菜单项换行 */
+    padding: 10px;
+    gap: 10px; /* 添加菜单项之间的间距 */
+    width: 100%; /* 填满下拉菜单的宽度 */
+    box-sizing: border-box; /* 确保内边距不影响宽度 */
+    justify-content: flex-start; /* 左对齐菜单项 */
+}
+
+/* 菜单项样式 */
+.dropdown-item {
+    background-color: #f8f9fa; /* 浅灰色背景 */
+    border-radius: 5px;
     padding: 10px 15px;
     cursor: pointer;
-    white-space: nowrap;
-    text-align: center;
-    margin-right: 5px; /* 横向间距 */
-    background-color: #f9f9f9;
-    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 120px; /* 固定宽度，根据需要调整 */
+    text-align: left; /* 文本左对齐 */
+    white-space: nowrap; /* 防止文本在菜单项内换行 */
+    overflow: hidden; /* 隐藏溢出部分 */
+    text-overflow: ellipsis; /* 使用省略号表示溢出 */
+    flex: 0 0 auto; /* 确保菜单项根据内容宽度排列 */
 }
 
-.menu-item:hover {
-    background-color: #007BFF;
+.dropdown-item:hover {
+    background-color: #007BFF; /* 主题蓝色 */
     color: white;
 }
 
-.menu-item:last-child {
-    margin-right: 0;
+.dropdown-item.selected {
+    background-color: #0056b3; /* 深蓝色 */
+    color: white;
+    font-weight: bold;
+    border: 2px solid #fff;
+}
+
+/* 禁用项样式 */
+.dropdown-item.disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* 动画效果 */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+@keyframes fadeOutScale {
+    from {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    to {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 576px) {
+    .dropdown-items {
+        flex-direction: column; /* 小屏幕上纵向排列 */
+    }
+
+    .dropdown-item {
+        flex: 1 1 100%; /* 填满整个宽度 */
+        width: 100%; /* 确保菜单项宽度自适应 */
+    }
 }

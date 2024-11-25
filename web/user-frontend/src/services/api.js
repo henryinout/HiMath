@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: 'http://localhost:3000/api', // 根据实际情况调整
 });
 
 // 在请求拦截器中添加 Authorization 头部

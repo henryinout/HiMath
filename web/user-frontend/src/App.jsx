@@ -3,7 +3,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Competition from './pages/Competition';
 import CompetitionList from './pages/CompetitionList';
 import CompetitionDetail from './pages/CompetitionDetail';
 import Exam from './pages/Exam';
@@ -19,21 +18,17 @@ const App = () => {
             <Routes>
                 {/* 使用布局组件包装所有需要导航栏的路由 */}
                 <Route path="/" element={<Layout />}>
-                    {/* 首页 */}
+                    {/* 公共路由 */}
                     <Route index element={<Home />} />
-
-                    {/* 登录和注册页面 */}
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
 
                     {/* 受保护的路由 */}
                     <Route element={<ProtectedRoute />}>
-                        {/* 比赛相关页面 */}
                         <Route path="competitions" element={<CompetitionList />} />
                         <Route path="competitions/:competitionId" element={<CompetitionDetail />} />
                         <Route path="exam/:competitionId" element={<Exam />} />
                         <Route path="results" element={<Results />} />
-                        <Route path="competition" element={<Competition />} /> {/* 根据需要调整 */}
                     </Route>
 
                     {/* 404 页面 */}

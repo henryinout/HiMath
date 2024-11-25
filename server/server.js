@@ -61,6 +61,7 @@ const competitionSchema = new mongoose.Schema({
 });
 const Competition = mongoose.model("Competition", competitionSchema);
 
+
 // Submission Schema - 用于实时提交答案
 const submissionSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -150,6 +151,7 @@ app.post("/api/register", async (req, res) => {
 // -------------------------
 // User Login
 // -------------------------
+
 app.post("/api/login", async (req, res) => {
     const { username, password } = req.body;
 
@@ -171,7 +173,7 @@ app.post("/api/login", async (req, res) => {
             JWT_SECRET,
             { expiresIn: "1h" }
         );
-
+        
         // 返回用户ID用于前端权限判断
         res.json({ token, userId: user._id });
     } catch (err) {
@@ -200,27 +202,47 @@ app.post("/api/questions", authenticateToken, async (req, res) => {
     }
 });
 
-// Create a competition
+// 创建竞赛
 app.post("/api/competitions", authenticateToken, async (req, res) => {
     const { name, description, questionIds, userIds, startTime, endTime } = req.body;
 
-    // Validate input
+    // 验证必填字段
     if (!name || !questionIds || !startTime || !endTime) {
-        return res.status(400).json({ error: "Name, questionIds, startTime, and endTime are required." });
+        return res.status(400).json({ error: "名称、题目 IDs、开始时间和结束时间为必填项。" });
+    }
+
+    // 验证 ObjectId 格式
+    const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
+    if (!questionIds.every(isValidObjectId)) {
+        return res.status(400).json({ error: "部分题目 IDs 格式不正确。" });
+    }
+    if (userIds && !userIds.every(isValidObjectId)) {
+        return res.status(400).json({ error: "部分用户 IDs 格式不正确。" });
+    }
+
+    // 验证时间逻辑
+    const start = new Date(startTime);
+    const end = new Date(endTime);
+    if (isNaN(start) || isNaN(end)) {
+        return res.status(400).json({ error: "开始时间和结束时间格式不正确。" });
+    }
+    if (start >= end) {
+        return res.status(400).json({ error: "开始时间必须早于结束时间。" });
     }
 
     try {
+        // 创建新的竞赛，确保日期为 UTC
         const competition = await Competition.create({
             name,
             description, // 新增描述字段
             questions: questionIds,
             authorizedUsers: userIds,
-            startTime,
-            endTime,
+            startTime: start, // 已解析为 Date 对象
+            endTime: end,
             createdBy: req.user.id,
         });
 
-        // Add competition to each user's competitions array
+        // 将竞赛添加到每个用户的 competitions 数组中
         if (userIds && userIds.length > 0) {
             await User.updateMany(
                 { _id: { $in: userIds } },
@@ -228,9 +250,10 @@ app.post("/api/competitions", authenticateToken, async (req, res) => {
             );
         }
 
-        res.status(201).json({ message: "Competition created successfully.", competition });
+        res.status(201).json({ message: "竞赛创建成功。", competition });
     } catch (err) {
-        res.status(500).json({ error: "Error creating competition." });
+        console.error("创建竞赛时出错：", err);
+        res.status(500).json({ error: "创建竞赛时出错。" });
     }
 });
 
@@ -264,21 +287,31 @@ app.get("/api/competitions", authenticateToken, async (req, res) => {
 app.get("/api/competitions/:competitionId", authenticateToken, async (req, res) => {
     const { competitionId } = req.params;
 
+    // 验证 ObjectId 格式
+    if (!mongoose.Types.ObjectId.isValid(competitionId)) {
+        return res.status(400).json({ error: "Invalid competitionId format." });
+    }
+
     try {
         const competition = await Competition.findById(competitionId)
             .populate("questions")
-            .populate("authorizedUsers", "username");
+            .populate("authorizedUsers", "username")
+            .populate("createdBy", "username"); // 填充 createdBy 字段
 
         if (!competition) {
             return res.status(404).json({ error: "Competition not found." });
         }
 
         const userId = req.user.id;
-        const hasAccess = competition.authorizedUsers.some(user => user._id.toString() === userId);
+        const hasAccess = competition.authorizedUsers.some(user => user._id.toString() === userId) || req.user.role === 'admin';
+
+        if (!hasAccess) {
+            return res.status(403).json({ error: "You do not have access to this competition." });
+        }
 
         res.json({ competition, hasAccess });
     } catch (err) {
-        console.error(err);
+        console.error("Error fetching competition details:", err);
         res.status(500).json({ error: "Unable to fetch competition details." });
     }
 });

@@ -2,7 +2,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
 import UserList from './pages/Users/UserList';
 import AddUser from './pages/Users/AddUser';
 import EditUser from './pages/Users/EditUser';
@@ -15,6 +14,7 @@ import EditCompetition from './pages/Competitions/EditCompetition';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Dashboard/Home';
+import Layout from './components/Layout'; // 引入布局组件
 
 const App = () => {
   return (
@@ -26,7 +26,7 @@ const App = () => {
         {/* 仪表盘及其子路由 */}
         <Route path="/dashboard" element={
           <ProtectedRoute>
-            <Dashboard />
+            <Layout /> {/* 使用布局组件 */}
           </ProtectedRoute>
         }>
           {/* 仪表盘首页 */}
@@ -45,7 +45,7 @@ const App = () => {
           {/* 竞赛管理 */}
           <Route path="competitions" element={<CompetitionList />} />
           <Route path="competitions/add" element={<AddCompetition />} />
-          <Route path="competitions/edit/:id" element={<EditCompetition />} />
+          <Route path="competitions/edit/:competitionId" element={<EditCompetition />} />
         </Route>
 
         {/* 重定向根路径 */}

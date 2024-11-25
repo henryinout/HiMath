@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Spinner, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import api from '../services/api'; // 假设您已经创建了 api.js 来处理 API 请求
+import api from '../services/api'; // 使用 api.js 处理请求
 
 const Home = () => {
     const [competitions, setCompetitions] = useState([]);
@@ -14,7 +14,9 @@ const Home = () => {
         const fetchCompetitions = async () => {
             try {
                 const response = await api.get('/competitions');
-                setCompetitions(response.data);
+                // 过滤出 hasAccess 为 true 的比赛
+                const accessibleCompetitions = response.data.filter(comp => comp.hasAccess);
+                setCompetitions(accessibleCompetitions);
             } catch (err) {
                 console.error(err);
                 setError('无法加载比赛列表，请稍后再试。');

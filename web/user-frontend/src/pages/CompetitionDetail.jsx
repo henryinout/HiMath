@@ -1,25 +1,30 @@
 // src/pages/CompetitionDetail.jsx
 
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Card, Button, Spinner, Alert } from 'react-bootstrap';
-import api from '../services/api'; // 假设您已经创建了 api.js 来处理 API 请求
+import { useParams, Navigate } from 'react-router-dom';
+import { Container, Spinner, Alert, Card, Button, ListGroup } from 'react-bootstrap';
+import api from '../services/api';
 
 const CompetitionDetail = () => {
     const { competitionId } = useParams();
-    const navigate = useNavigate();
     const [competition, setCompetition] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [hasAccess, setHasAccess] = useState(false);
+    const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
         const fetchCompetitionDetail = async () => {
             try {
                 const response = await api.get(`/competitions/${competitionId}`);
-                setCompetition(response.data);
+                setCompetition(response.data.competition);
+                setHasAccess(response.data.hasAccess);
+                if (!response.data.hasAccess) {
+                    setError('您没有权限参与此比赛。');
+                }
             } catch (err) {
                 console.error(err);
-                setError('无法加载比赛详情，请稍后再试。');
+                setError('无法加载比赛详细信息，请稍后再试。');
             } finally {
                 setLoading(false);
             }
@@ -28,51 +33,54 @@ const CompetitionDetail = () => {
         fetchCompetitionDetail();
     }, [competitionId]);
 
-    const handleStartExam = () => {
-        navigate(`/exam/${competitionId}`);
+    const handleEnterCompetition = () => {
+        // 导航到考试页面
+        setRedirect(true);
     };
 
-    if (loading) {
-        return (
-            <Container className="mt-4 text-center">
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden">加载中...</span>
-                </Spinner>
-            </Container>
-        );
-    }
-
-    if (error) {
-        return (
-            <Container className="mt-4">
-                <Alert variant="danger">{error}</Alert>
-            </Container>
-        );
-    }
-
-    if (!competition) {
-        return (
-            <Container className="mt-4">
-                <Alert variant="info">没有找到该比赛。</Alert>
-            </Container>
-        );
+    if (redirect) {
+        // 修正重定向路径，确保与路由配置匹配
+        return <Navigate to={`/exam/${competitionId}`} replace />;
     }
 
     return (
         <Container className="mt-4">
-            <Card>
-                <Card.Body>
-                    <Card.Title>{competition.name}</Card.Title>
-                    <Card.Text>{competition.description}</Card.Text>
-                    <Card.Text>
-                        开始时间：{new Date(competition.startTime).toLocaleString()} <br />
-                        结束时间：{new Date(competition.endTime).toLocaleString()}
-                    </Card.Text>
-                    <Button variant="primary" onClick={handleStartExam}>
-                        开始考试
-                    </Button>
-                </Card.Body>
-            </Card>
+            {loading ? (
+                <div className="text-center">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">加载中...</span>
+                    </Spinner>
+                </div>
+            ) : error ? (
+                <Alert variant="danger">{error}</Alert>
+            ) : (
+                <Card>
+                    <Card.Body>
+                        <Card.Title>{competition.name}</Card.Title>
+                        <Card.Text>
+                            开始时间：{new Date(competition.startTime).toLocaleString()} <br />
+                            结束时间：{new Date(competition.endTime).toLocaleString()}
+                        </Card.Text>
+                        <hr />
+                        <h4>题目列表</h4>
+                        <ListGroup variant="flush">
+                            {competition.questions.map((question, index) => (
+                                <ListGroup.Item key={question._id}>
+                                    <strong>题目 {index + 1}:</strong> {question.title}
+                                </ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                        <hr />
+                        <Button
+                            variant="primary"
+                            onClick={handleEnterCompetition}
+                            disabled={!hasAccess}
+                        >
+                            {hasAccess ? "开始考试" : "无权限参与"}
+                        </Button>
+                    </Card.Body>
+                </Card>
+            )}
         </Container>
     );
 };

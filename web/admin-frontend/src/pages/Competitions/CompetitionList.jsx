@@ -1,8 +1,9 @@
 // src/pages/Competitions/CompetitionList.jsx
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import api from '../../services/api';
 import { Link } from 'react-router-dom';
+import { format, parseISO } from 'date-fns'; // 使用 date-fns 进行日期处理
 
 const CompetitionList = () => {
     const [competitions, setCompetitions] = useState([]);
@@ -52,8 +53,8 @@ const CompetitionList = () => {
                     {competitions.map(comp => (
                         <tr key={comp._id}>
                             <td>{comp.name}</td>
-                            <td>{new Date(comp.startTime).toLocaleString()}</td>
-                            <td>{new Date(comp.endTime).toLocaleString()}</td>
+                            <td>{format(parseISO(comp.startTime), 'yyyy-MM-dd HH:mm')}</td>
+                            <td>{format(parseISO(comp.endTime), 'yyyy-MM-dd HH:mm')}</td>
                             <td>{comp.createdBy.username}</td>
                             <td>
                                 <Button as={Link} to={`/dashboard/competitions/edit/${comp._id}`} variant="warning" size="sm" className="me-2">

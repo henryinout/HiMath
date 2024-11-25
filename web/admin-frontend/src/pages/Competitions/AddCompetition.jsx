@@ -38,8 +38,8 @@ const AddCompetition = () => {
         try {
             await api.post('/admin/competitions', {
                 name,
-                startTime,
-                endTime,
+                startTime: new Date(startTime).toISOString(), // 转换为 UTC
+                endTime: new Date(endTime).toISOString(),
                 questionIds: selectedQuestions,
                 userIds: selectedUsers,
             });

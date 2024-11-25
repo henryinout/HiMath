@@ -35,7 +35,6 @@ const AppNavbar = () => {
                         {token && (
                             <>
                                 <Nav.Link as={Link} to="/competitions">比赛列表</Nav.Link>
-                                <Nav.Link as={Link} to="/exam">考试</Nav.Link>
                                 <Nav.Link as={Link} to="/results">成绩查询</Nav.Link>
                             </>
                         )}
@@ -44,7 +43,7 @@ const AppNavbar = () => {
                         {token ? (
                             <>
                                 <Navbar.Text className="me-3">
-                                    Signed in as: <a href="#login">{getUsername()}</a>
+                                    欢迎, {getUsername()}
                                 </Navbar.Text>
                                 <Nav.Link onClick={handleLogout}>登出</Nav.Link>
                             </>
