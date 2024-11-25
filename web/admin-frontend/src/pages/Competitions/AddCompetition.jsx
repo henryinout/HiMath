@@ -1,4 +1,3 @@
-// src/pages/Competitions/AddCompetition.jsx
 import React, { useEffect, useState } from 'react';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +5,7 @@ import api from '../../services/api';
 
 const AddCompetition = () => {
     const [name, setName] = useState('');
+    const [description, setDescription] = useState(''); // 新增状态变量
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [questions, setQuestions] = useState([]);
@@ -38,7 +38,8 @@ const AddCompetition = () => {
         try {
             await api.post('/admin/competitions', {
                 name,
-                startTime: new Date(startTime).toISOString(), // 转换为 UTC
+                description, // 包含描述字段
+                startTime: new Date(startTime).toISOString(),
                 endTime: new Date(endTime).toISOString(),
                 questionIds: selectedQuestions,
                 userIds: selectedUsers,
@@ -62,6 +63,18 @@ const AddCompetition = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
+                    />
+                </Form.Group>
+
+                {/* 新增比赛简介输入框 */}
+                <Form.Group controlId="description" className="mb-3">
+                    <Form.Label>比赛简介</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={3}
+                        placeholder="输入比赛简介"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </Form.Group>
 

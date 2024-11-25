@@ -1,9 +1,8 @@
-// src/pages/Competitions/EditCompetition.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { Container, Spinner, Alert, Form, Button } from 'react-bootstrap';
 import api from '../../services/api';
-import { format, parseISO } from 'date-fns'; // 使用 date-fns 进行日期处理
+import { format, parseISO } from 'date-fns';
 
 const EditCompetition = () => {
     const { competitionId } = useParams();
@@ -16,6 +15,7 @@ const EditCompetition = () => {
 
     const [formData, setFormData] = useState({
         name: '',
+        description: '', // 新增描述字段
         startTime: '',
         endTime: '',
         questionIds: [],
@@ -23,7 +23,7 @@ const EditCompetition = () => {
     });
 
     useEffect(() => {
-        console.log('EditCompetition - competitionId:', competitionId); // 验证 competitionId
+        console.log('EditCompetition - competitionId:', competitionId);
         if (!competitionId) {
             setError('比赛 ID 无效。');
             setLoading(false);
@@ -37,7 +37,8 @@ const EditCompetition = () => {
                 setCompetition(comp);
                 setFormData({
                     name: comp.name,
-                    startTime: format(parseISO(comp.startTime), "yyyy-MM-dd'T'HH:mm"), // 格式化为 input datetime-local
+                    description: comp.description || '', // 设置描述字段
+                    startTime: format(parseISO(comp.startTime), "yyyy-MM-dd'T'HH:mm"),
                     endTime: format(parseISO(comp.endTime), "yyyy-MM-dd'T'HH:mm"),
                     questionIds: comp.questions.map(q => q._id),
                     userIds: comp.authorizedUsers.map(u => u._id),
@@ -90,7 +91,8 @@ const EditCompetition = () => {
 
         const updatedData = {
             name: formData.name,
-            startTime: new Date(formData.startTime).toISOString(), // 转换为 UTC
+            description: formData.description, // 包含描述字段
+            startTime: new Date(formData.startTime).toISOString(),
             endTime: new Date(formData.endTime).toISOString(),
             questionIds: formData.questionIds,
             userIds: formData.userIds,
@@ -140,6 +142,19 @@ const EditCompetition = () => {
                             value={formData.name}
                             onChange={handleChange}
                             required
+                        />
+                    </Form.Group>
+
+                    {/* 新增比赛简介输入框 */}
+                    <Form.Group className="mb-3" controlId="formDescription">
+                        <Form.Label>比赛简介</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={3}
+                            placeholder="输入比赛简介"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
                         />
                     </Form.Group>
 

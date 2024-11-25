@@ -11,6 +11,7 @@ import "../styles/styles.css";
 
 const Exam = () => {
     const { competitionId } = useParams(); // 获取 URL 参数
+    const [competition, setCompetition] = useState(null); // 添加竞赛详情状态
     const [questions, setQuestions] = useState([]);
     const [selectedQuestionId, setSelectedQuestionId] = useState(null);
     const [answers, setAnswers] = useState({});
@@ -19,17 +20,39 @@ const Exam = () => {
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-        if (!token) {
-            alert("您需要先登录！");
-            navigate("/login");
-        } else if (!competitionId) {
-            alert("无效的竞赛ID！");
-            navigate("/competitions");
-        } else {
-            fetchQuestions();
-        }
+        const fetchData = async () => {
+            if (!token) {
+                alert("您需要先登录！");
+                navigate("/login");
+                return;
+            }
+            if (!competitionId) {
+                alert("无效的竞赛ID！");
+                navigate("/competitions");
+                return;
+            }
+
+            await fetchCompetition();
+            await fetchQuestions();
+        };
+        fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token, competitionId]);
+
+    // 从后台获取竞赛详情
+    const fetchCompetition = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/competitions/${competitionId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log("竞赛详情响应：", response.data); // 调试日志
+            setCompetition(response.data.competition); // 只设置竞赛详情
+        } catch (error) {
+            console.error("无法加载竞赛详情：", error);
+            alert("无法加载竞赛详情，请稍后再试！");
+            navigate("/competitions");
+        }
+    };
 
     // 从后台获取题目
     const fetchQuestions = async () => {
@@ -37,6 +60,7 @@ const Exam = () => {
             const response = await axios.get(`http://localhost:3000/api/competitions/${competitionId}/questions`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
+            console.log("竞赛题目响应：", response.data); // 调试日志
             // 假设后台返回的是一个数组
             setQuestions(response.data);
             if (response.data.length > 0) {
@@ -109,7 +133,7 @@ const Exam = () => {
             {/* Header Section */}
             <header className="bg-primary text-white py-3">
                 <div className="container d-flex justify-content-between align-items-center">
-                    <h1 className="fs-4 m-0">HiMath Team Round</h1>
+                    <h1 className="fs-4 m-0">{competition ? competition.name : "加载中..."}</h1>
                     <Timer durationInSeconds={32 * 60 + 49} onTimeUp={handleTimeUp} />
                 </div>
             </header>
@@ -155,7 +179,7 @@ const Exam = () => {
                     <div className="col-lg-4 col-md-5 bg-light d-flex flex-column justify-content-center align-items-center">
                         <div className="chat-placeholder text-center">
                             <h5>聊天室功能开发中...</h5>
-                            {/* 您可以在这里添加一个占位符图标或其他元素 */}
+                            {/* 占位符图标 */}
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="100"
